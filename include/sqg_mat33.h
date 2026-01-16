@@ -178,7 +178,7 @@ namespace sqg
         return m;
     }
 
-    template<typename T> inline mat33<T> rot_mat_z( T angle )
+    template<typename T> inline mat33<T> rotz_mat( T angle )
     {
         mat33<T> m;
         set_rotz(m, angle);

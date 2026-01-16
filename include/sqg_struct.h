@@ -68,7 +68,7 @@ namespace sqg
         T a[4][4]{};
 
         template<typename R>
-        inline constexpr operator R() const {
+        inline constexpr explicit operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -84,7 +84,7 @@ namespace sqg
         T w{};
 
         template<typename R>
-        inline constexpr operator R() const {
+        inline constexpr explicit operator R() const {
             R r;
             assign(r, *this);
             return r;

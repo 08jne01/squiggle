@@ -21,6 +21,7 @@ namespace sqg
         vec2<T> v;
         X(v) = static_cast<T>(X(vector));
         Y(v) = static_cast<T>(Y(vector));
+        return v;
     }
 
     template<typename T, detail::vec3_type V>
@@ -30,6 +31,7 @@ namespace sqg
         X(v) = static_cast<T>(X(vector));
         Y(v) = static_cast<T>(Y(vector));
         Z(v) = static_cast<T>(Z(vector));
+        return v;
     }
 
     template<typename T, detail::vec4_type V>
@@ -40,6 +42,7 @@ namespace sqg
         Y(v) = static_cast<T>(Y(vector));
         Z(v) = static_cast<T>(Z(vector));
         W(v) = static_cast<T>(W(vector));
+        return v;
     }
 
     template<detail::vec_type T>
@@ -80,16 +83,18 @@ namespace sqg
     inline constexpr T& operator*=( T& vector, typename vec_traits<T>::scalar_type scalar )
     {
         vector = scalar * vector;
+        return vector;
     }
 
     template<detail::vec_type T>
     inline constexpr T& operator/=( T& vector, typename vec_traits<T>::scalar_type scalar )
     {
         vector = vector / scalar;
+        return vector;
     }
 
     template<detail::vec_type T>
-    [[nodiscard]] inline constexpr T& operator!=( const T& a, const T& b )
+    [[nodiscard]] inline constexpr bool operator!=( const T& a, const T& b )
     {
         return ! ( a == b );
     }
