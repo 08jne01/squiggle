@@ -1,19 +1,8 @@
 #pragma once
-#include "sqg_vec3.h"
-#include "sqg_mat33.h"
-
+#include "sqg_struct.h"
+#include <cmath>
 namespace sqg
 {
-    template<detail::mat33_type M, detail::vec3_type V>
-    [[nodiscard]] inline constexpr V operator*( const M& matrix, const V& vector )
-    {
-        V v;
-        X(v) = dot( row<0>(matrix), vector );
-        Y(v) = dot( row<1>(matrix), vector );
-        Z(v) = dot( row<2>(matrix), vector );
-        return v;
-    }
-
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rotation matrix from axis and angle
     template<detail::vec3_type T> inline mat33<typename vec_traits<T>::scalar_type> rot_mat( const T& vector, typename vec_traits<T>::scalar_type angle )

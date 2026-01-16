@@ -1,10 +1,10 @@
 #pragma once
-#include "sqg_struct.h"
+#include "sqg_concepts.h"
 
 namespace sqg
 {
-    template<detail::mat44_type TyLeft, detail::mat44_type TyRight> 
-    inline constexpr void assign( TyLeft& destination, TyRight& source )
+    template<detail::mat44_type TyLeft, detail::read_mat44_type TyRight> 
+    inline constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         A00(destination) = A00(source);
         A01(destination) = A01(source);
@@ -50,5 +50,11 @@ namespace sqg
         A31(matrix) = zero;
         A32(matrix) = zero;
         A33(matrix) = one;
+    }
+
+    template<detail::mat44_type M44, detail::mat33_type M33, detail::vec3_type V3> 
+    inline constexpr void set_transform( M44& matrix, const M33& orientation, const V3& position )
+    {
+        col<0>(matrix) = col<0>(orientation);
     }
 }

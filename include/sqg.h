@@ -7,5 +7,6 @@
 #include "sqg_mat.h"
 #include "sqg_quat.h"
 
-
+#include "sqg_mat_view.h"
 #include "sqg_mat33_vec3.h"
+#include "sqg_quat_vec3.h"

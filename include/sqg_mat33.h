@@ -6,7 +6,7 @@
 namespace sqg
 {
     template<detail::mat33_type TyLeft, detail::mat33_type TyRight> 
-    inline constexpr void assign( TyLeft& destination, TyRight& source )
+    inline constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         A00(destination) = A00(source);
         A01(destination) = A01(source);
@@ -38,24 +38,6 @@ namespace sqg
         A22(matrix) = one;
     }
 
-    template<int row_index, detail::mat33_type M> vec3<typename mat_traits<M>::scalar_type> row(const M& matrix)
-    {
-        vec3<typename mat_traits<M>::scalar_type> v;
-        X(v) = A<row_index,0>(matrix);
-        Y(v) = A<row_index,1>(matrix);
-        Z(v) = A<row_index,2>(matrix);
-        return v;
-    }
-
-    template<int col_index, detail::mat33_type M> vec3<typename mat_traits<M>::scalar_type> col(const M& matrix)
-    {
-        vec3<typename mat_traits<M>::scalar_type> v;
-        X(v) = A<0,col_index>(matrix);
-        Y(v) = A<1,col_index>(matrix);
-        Z(v) = A<2,col_index>(matrix);
-        return v;
-    }
-
     template<detail::mat33_type M> inline constexpr void transpose(M& matrix)
     {
         // xx 01 02
@@ -64,13 +46,6 @@ namespace sqg
         std::swap( A01(matrix), A10(matrix) );
         std::swap( A02(matrix), A20(matrix) );
         std::swap( A12(matrix), A21(matrix) );
-    }
-
-    template<detail::mat33_type M> inline constexpr M transposed(const M& matrix)
-    {
-        M m = matrix;
-        transpose(m);
-        return m;
     }
 
     //https://en.wikipedia.org/wiki/Determinant

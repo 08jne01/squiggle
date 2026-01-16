@@ -3,7 +3,7 @@
 #include <cmath>
 namespace sqg
 {
-    template<detail::vec2_type TyLeft, detail::vec2_type TyRight>
+    template<detail::vec2_type TyLeft, detail::read_vec2_type TyRight>
     inline constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         X(destination) = X(source);

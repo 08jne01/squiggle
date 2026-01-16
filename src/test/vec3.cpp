@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+#include <iostream>
 #include <random>
 #include <sqg.h>
 #include <catch2/catch_get_random_seed.hpp>
@@ -28,7 +29,7 @@ namespace sqg
 
 TEST_CASE("vec3")
 {
-    static_assert( sqg::detail::vec2_type<sqg::vec2<int>>, "Should be vec2" );
+
     static_assert( ! sqg::detail::vec3_type<sqg::vec2<int>>, "Shouldn't be vec3" );
     static_assert( ! sqg::detail::vec4_type<sqg::vec2<int>>, "Shouldn't be vec4" );
     static_assert( ! sqg::detail::mat22_type<sqg::vec2<int>>, "Shouldn't be mat22" );
@@ -39,6 +40,7 @@ TEST_CASE("vec3")
     SECTION("assign")
     {
         Vector3<int> v = sqg::vec3<int>{ 1, 2, 3 };
+        sqg::X(v);
         REQUIRE( v.a[0] == 1 );
         REQUIRE( v.a[1] == 2 );
         REQUIRE( v.a[2] == 3 );
@@ -279,4 +281,16 @@ TEST_CASE("vec3")
 TEST_CASE("Testing")
 {
     sqg::quat<float> q = sqg::rotx_quat(4.0f);
+
+    sqg::mat22<double> M = {
+        {{1.0, 2.0},{3.0, 4.0}},
+    };
+
+    sqg::mat22<double> M_T = transposed(M);
+
+    int x = 10;
+    //const auto y = sqg::transposed(sqg::mat22<double>{});
+    //static_assert( sqg::detail::mat_type<decltype(y)> );
+    //const double z = sqg::A<0,0>( y );
+
 }

@@ -14,6 +14,7 @@ namespace sqg
     {
         using scalar_type = T;
         using type = Vector2<T>;
+        using const_type = const Vector2<T>;
         static constexpr int n_dims = 2;
         static inline constexpr scalar_type X(const type& v) { return v.a[0]; }
         static inline constexpr scalar_type Y(const type& v) { return v.a[1]; }

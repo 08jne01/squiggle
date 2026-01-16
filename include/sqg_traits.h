@@ -3,8 +3,19 @@
 namespace sqg
 {
     // Defined Row,Col
-    template<int row, int col, detail::mat_type T> inline constexpr typename mat_traits<T>::scalar_type A(const T& v)   { return mat_traits<T>::template A<row,col>(v); }
-    template<int row, int col, detail::mat_type T> inline constexpr typename mat_traits<T>::scalar_type& A(T& v)        { return mat_traits<T>::template A<row,col>(v); }
+    template<int row, int col, detail::mat_type T> 
+    inline constexpr typename mat_traits<T>::scalar_type A(const T& v) 
+    { 
+        static_assert( row < mat_traits<T>::n_dims && col < mat_traits<T>::n_dims, "row and col must be less than the number of dimensions" );
+        return mat_traits<T>::template A<row,col>(v); 
+    }
+    
+    template<int row, int col, detail::mat_type T>
+    inline constexpr typename mat_traits<T>::scalar_type& A(T& v)
+    {
+        static_assert( row < mat_traits<T>::n_dims && col < mat_traits<T>::n_dims, "row and col must be less than the number of dimensions" );
+        return mat_traits<T>::template A<row,col>(v); 
+    }
 
     template<detail::mat_type T> inline constexpr typename mat_traits<T>::scalar_type A00(const T& v) { return mat_traits<T>::template A<0,0>(v); } 
     template<detail::mat_type T> inline constexpr typename mat_traits<T>::scalar_type A01(const T& v) { return mat_traits<T>::template A<0,1>(v); } 
