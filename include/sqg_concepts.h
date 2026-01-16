@@ -30,7 +30,7 @@ namespace sqg::detail
 
     template<typename T>
     concept vec_x_read = requires(T cv) {
-        { vec_traits<std::remove_const_t<T>>::X(cv) } -> std::same_as<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
+        { vec_traits<std::remove_const_t<T>>::X(cv) } -> std::convertible_to<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
     };
 
     template<typename T>
@@ -40,7 +40,7 @@ namespace sqg::detail
 
     template<typename T>
     concept vec_y_read = requires(T cv) {
-        { vec_traits<std::remove_const_t<T>>::Y(cv) } -> std::same_as<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
+        { vec_traits<std::remove_const_t<T>>::Y(cv) } -> std::convertible_to<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
     };
 
     template<typename T>
@@ -50,7 +50,7 @@ namespace sqg::detail
 
     template<typename T>
     concept vec_z_read = requires(T cv) {
-        { vec_traits<std::remove_const_t<T>>::Z(cv) } -> std::same_as<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
+        { vec_traits<std::remove_const_t<T>>::Z(cv) } -> std::convertible_to<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
     };
 
     template<typename T>
@@ -60,7 +60,7 @@ namespace sqg::detail
 
     template<typename T>
     concept vec_w_read = requires(T cv) {
-        { vec_traits<std::remove_const_t<T>>::W(cv) } -> std::same_as<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
+        { vec_traits<std::remove_const_t<T>>::W(cv) } -> std::convertible_to<typename vec_traits<std::remove_const_t<T>>::scalar_type>;
     };
 
     template<typename T>
