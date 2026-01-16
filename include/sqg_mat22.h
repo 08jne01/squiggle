@@ -1,6 +1,9 @@
 #pragma once
 #include "sqg_concepts.h"
+#include "sqg_mat_view.h"
 #include "sqg_struct.h"
+#include "sqg_vec2.h"
+
 #include <utility>
 #include <cmath>
 namespace sqg
@@ -19,13 +22,24 @@ namespace sqg
     inline constexpr void set_identity(T& matrix)
     {
         constexpr typename mat_traits<T>::scalar_type zero{0};
-        constexpr typename mat_traits<T>::scalar_type one{0};
+        constexpr typename mat_traits<T>::scalar_type one{1};
 
         A00(matrix) = one;
         A01(matrix) = zero;
 
         A10(matrix) = zero;
         A11(matrix) = one;
+    }
+
+    template<detail::read_mat22_type M1, detail::read_mat22_type M2>
+    [[nodiscard]] inline constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
+    {
+        mat_value2<M1,M2> m;
+        A00(m) = sqg::dot(sqg::row<0>(a), sqg::col<0>(b));
+        A01(m) = sqg::dot(sqg::row<0>(a), sqg::col<1>(b));
+        A10(m) = sqg::dot(sqg::row<1>(a), sqg::col<0>(b));
+        A11(m) = sqg::dot(sqg::row<1>(a), sqg::col<1>(b));
+        return m;
     }
 
     template<detail::mat22_type M> 

@@ -1,8 +1,10 @@
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
 #include <random>
-#include <sqg.h>
+#include <sqg_vec.h>
 #include <catch2/catch_get_random_seed.hpp>
+#include <sqg_quat.h>
+#include <sqg_quat_vec3.h>
 
 template<typename T>
 struct Vector3
@@ -280,24 +282,32 @@ TEST_CASE("vec3")
 
 TEST_CASE("Testing")
 {
-    sqg::quat<float> q = sqg::rotx_quat(4.0f);
+    // sqg::quat<float> q = sqg::rotx_quat(4.0f);
 
-    sqg::mat22<double> M = {
-        {{1.0, 2.0},{3.0, 4.0}},
-    };
+    // sqg::mat22<double> M = {
+    //     {{1.0, 2.0},{3.0, 4.0}},
+    // };
 
-    sqg::mat44<double> M_T;
-    sqg::mat33<double> d;
+    // sqg::mat44<double> M_T;
+    // const sqg::mat22<double> d;
 
-    static_assert( sqg::detail::mat33_read<sqg::mat33<double>> );
-    static_assert( sqg::detail::mat33_write<sqg::mat33<double>> );
+    // static_assert( sqg::detail::mat33_read<sqg::mat33<double>> );
+    // static_assert( sqg::detail::mat33_write<sqg::mat33<double>> );
 
-    sqg::assign( row<0>(d), sqg::vec3<double>{} );
+    // using view = sqg::transposed_view<sqg::mat22<double>>;
 
-    orientation(M_T) = d;
+    // sqg::mat_traits<sqg::mat22<double>>::A<0,0>(d);
+
+    // auto v = view{d};
+
+    // sqg::mat_traits<view>::A<0, 0>( v );
+
+    //sqg::assign( row<0>(d), sqg::vec3<double>{} );
+
+    //orientation(M_T) = d;
     //position(M_T) = sqg::vec3<double>{};
 
-    assign(orientation(M_T), d);
+    //assign(orientation(M_T), d);
 
 
     //const auto y = sqg::transposed(sqg::mat22<double>{});

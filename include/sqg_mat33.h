@@ -1,11 +1,13 @@
 #pragma once
 #include "sqg_concepts.h"
+#include "sqg_mat_view.h"
 #include "sqg_struct.h"
+#include "sqg_vec3.h"
 #include <utility>
 #include <cmath>
 namespace sqg
 {
-    template<detail::mat33_type TyLeft, detail::mat33_type TyRight> 
+    template<detail::mat33_type TyLeft, detail::read_mat33_type TyRight> 
     inline constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         A00(destination) = A00(source);
@@ -38,6 +40,24 @@ namespace sqg
         A22(matrix) = one;
     }
 
+    template<detail::read_mat33_type M1, detail::read_mat33_type M2>
+    [[nodiscard]] inline constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
+    {
+        mat_value2<M1,M2> m;
+        A00(m) = sqg::dot(sqg::row<0>(a), sqg::col<0>(b));
+        A01(m) = sqg::dot(sqg::row<0>(a), sqg::col<1>(b));
+        A02(m) = sqg::dot(sqg::row<0>(a), sqg::col<2>(b));
+
+        A10(m) = sqg::dot(sqg::row<1>(a), sqg::col<0>(b));
+        A11(m) = sqg::dot(sqg::row<1>(a), sqg::col<1>(b));
+        A12(m) = sqg::dot(sqg::row<1>(a), sqg::col<2>(b));
+
+        A20(m) = sqg::dot(sqg::row<2>(a), sqg::col<0>(b));
+        A21(m) = sqg::dot(sqg::row<2>(a), sqg::col<1>(b));
+        A22(m) = sqg::dot(sqg::row<2>(a), sqg::col<2>(b));
+        return m;
+    }
+
     template<detail::mat33_type M> inline constexpr void transpose(M& matrix)
     {
         // xx 01 02
@@ -49,7 +69,7 @@ namespace sqg
     }
 
     //https://en.wikipedia.org/wiki/Determinant
-    template<detail::mat33_type M> 
+    template<detail::read_mat33_type M> 
     inline constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
     {
         const auto a = A00(matrix);
@@ -87,8 +107,8 @@ namespace sqg
         A02(matrix) = scalar{0};
         
         A10(matrix) = scalar{0};
-        A10(matrix) = cosa;
-        A10(matrix) = -sina;
+        A11(matrix) = cosa;
+        A12(matrix) = -sina;
         
         A20(matrix) = scalar{0};
         A21(matrix) = sina;
@@ -109,8 +129,8 @@ namespace sqg
         A02(matrix) = sina;
         
         A10(matrix) = scalar{0};
-        A10(matrix) = scalar{1};
-        A10(matrix) = scalar{0};
+        A11(matrix) = scalar{1};
+        A12(matrix) = scalar{0};
         
         A20(matrix) = -sina;
         A21(matrix) = scalar{0};
@@ -131,8 +151,8 @@ namespace sqg
         A02(matrix) = scalar{0};
         
         A10(matrix) = sina;
-        A10(matrix) = cosa;
-        A10(matrix) = scalar{0};
+        A11(matrix) = cosa;
+        A12(matrix) = scalar{0};
         
         A20(matrix) = scalar{0};
         A21(matrix) = scalar{0};

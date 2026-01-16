@@ -6,8 +6,22 @@ namespace sqg
     template<typename T>
     struct vec_traits;
 
+    // Determains what value gets selected, default to left argument
+    template<typename V1, typename V2>
+    struct deduce_vec_traits
+    {
+        using traits = vec_traits<V1>;
+    };
+
     template<typename T>
     struct mat_traits;
+
+    // Determains what value gets selected, default to left argument
+    template<typename M1, typename M2>
+    struct deduce_mat_traits
+    {
+        using traits = mat_traits<M1>;
+    };
 }
 
 
@@ -15,8 +29,8 @@ namespace sqg::detail
 {
     template<typename T>
     concept vec_type = requires(T v) {
-        requires std::same_as<typename vec_traits<T>::type, T>;
         { vec_traits<T>::n_dims };
+        { typename vec_traits<T>::type{} };
         { typename vec_traits<T>::scalar_type{} };
         { typename vec_traits<T>::scalar_type{0} };
         { typename vec_traits<T>::scalar_type{1} };
@@ -118,8 +132,8 @@ namespace sqg::detail
 
     template<typename T>
     concept mat_type = requires(T v) {
-        //requires std::same_as<typename mat_traits<T>::type, T>;
         { mat_traits<T>::n_dims };
+        { typename mat_traits<T>::type{} };
         { typename mat_traits<T>::scalar_type{} };
         { typename mat_traits<T>::scalar_type{0} };
         { typename mat_traits<T>::scalar_type{1} };
@@ -328,7 +342,32 @@ namespace sqg::detail
     concept read_mat44_type = requires() {
         requires mat_type_n<T,4>;
         requires mat44_read<T>;
-        requires mat44_write<T>;
     };
+}
 
+namespace sqg
+{
+    template<detail::vec_type T>
+    using vec_value = vec_traits<T>::type;
+
+    template<detail::vec_type V1, detail::vec_type V2>
+    using vec_value2 = deduce_vec_traits<V1,V2>::traits::type;
+
+    template<detail::vec_type T>
+    using vec_scalar = vec_traits<T>::scalar_type;
+
+    template<detail::vec_type V1, detail::vec_type V2>
+    using vec_scalar2 = deduce_vec_traits<V1,V2>::traits::scalar_type;
+
+    template<detail::mat_type T>
+    using mat_value = mat_traits<T>::type;
+
+    template<detail::mat_type M1, detail::mat_type M2>
+    using mat_value2 = deduce_mat_traits<M1,M2>::traits::type;
+
+    template<detail::mat_type T>
+    using mat_scalar = mat_traits<T>::scalar_type;
+
+    template<detail::mat_type M1, detail::mat_type M2>
+    using mat_scalar2 = deduce_mat_traits<M1,M2>::traits::scalar_type;
 }

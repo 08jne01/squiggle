@@ -206,6 +206,17 @@ namespace sqg
         static inline constexpr scalar_type& Y(type& v) { return v.y; }
         static inline constexpr scalar_type& Z(type& v) { return v.z; }
     };
+
+    // Setup Deduction for Return Types
+    // Select native vec2 over other vectors
+
+    template<typename T, typename V> struct deduce_vec_traits<V, vec2<T>> { using traits = vec_traits<vec2<T>>; };
+    template<typename T, typename V> struct deduce_vec_traits<V, vec3<T>> { using traits = vec_traits<vec3<T>>; };
+    template<typename T, typename V> struct deduce_vec_traits<V, vec4<T>> { using traits = vec_traits<vec4<T>>; };
+
+    template<typename T, typename V> struct deduce_mat_traits<V, mat22<T>> { using traits = mat_traits<mat22<T>>; };
+    template<typename T, typename V> struct deduce_mat_traits<V, mat33<T>> { using traits = mat_traits<mat33<T>>; };
+    template<typename T, typename V> struct deduce_mat_traits<V, mat44<T>> { using traits = mat_traits<mat44<T>>; };
 }
 
 namespace sqg::detail

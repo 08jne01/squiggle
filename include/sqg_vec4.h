@@ -4,8 +4,8 @@
 
 namespace sqg
 {
-    template<detail::vec4_type TyLeft, detail::vec4_type TyRight>
-    inline constexpr void assign( TyLeft& destination, const TyRight& source )
+    template<detail::vec4_type V1, detail::read_vec4_type V2>
+    inline constexpr void assign( V1& destination, const V2& source )
     {
         W(destination) = W(source);
         X(destination) = X(source);
@@ -16,23 +16,24 @@ namespace sqg
     template<detail::vec4_type T>
     inline constexpr void set_zero( T& vector )
     {
-        constexpr typename vec_traits<T>::scalar_type zero{0};
+        constexpr vec_scalar<T> zero{0};
         W(vector) = zero;
         X(vector) = zero;
         Y(vector) = zero;
         Z(vector) = zero;
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr typename vec_traits<T>::scalar_type dot( const T&a, const T& b )
+    template<detail::read_vec4_type V1, detail::read_vec4_type V2>
+    [[nodiscard]] inline constexpr vec_scalar2<V1,V2> dot( const V1& a, const V2& b )
     {
+        static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
         return W(a) * W(b) + X(a) * X(b) + Y(a) * Y(b) + Z(a) * Z(b);
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr T operator-( const T& vector )
+    template<detail::read_vec4_type T>
+    [[nodiscard]] inline constexpr vec_value<T> operator-( const T& vector )
     {
-        T v;
+        vec_value<T> v;
         W(v) = -W(vector);
         X(v) = -X(vector);
         Y(v) = -Y(vector);
@@ -40,10 +41,12 @@ namespace sqg
         return v;
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr T operator+( const T& a, const T& b )
+    template<detail::read_vec4_type V1, detail::read_vec4_type V2>
+    [[nodiscard]] inline constexpr vec_value2<V1,V2> operator+( const V1& a, const V2& b )
     {
-        T v;
+        static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
+
+        vec_value2<V1,V2> v;
         W(v) = W(a) + W(b);
         X(v) = X(a) + X(b);
         Y(v) = Y(a) + Y(b);
@@ -51,10 +54,12 @@ namespace sqg
         return v;
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr T operator-( const T& a, const T& b )
+    template<detail::read_vec4_type V1, detail::read_vec4_type V2>
+    [[nodiscard]] inline constexpr vec_value2<V1,V2> operator-( const V1& a, const V2& b )
     {
-        T v;
+        static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
+
+        vec_value2<V1,V2> v;
         W(v) = W(a) - W(b);
         X(v) = X(a) - X(b);
         Y(v) = Y(a) - Y(b);
@@ -62,10 +67,10 @@ namespace sqg
         return v;
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr T operator*( typename vec_traits<T>::scalar_type scalar, const T& vector )
+    template<detail::read_vec4_type T>
+    [[nodiscard]] inline constexpr vec_value<T> operator*( vec_scalar<T> scalar, const T& vector )
     {
-        T v;
+        vec_value<T> v;
         W(v) = scalar * W(vector);
         X(v) = scalar * X(vector);
         Y(v) = scalar * Y(vector);
@@ -73,10 +78,10 @@ namespace sqg
         return v;
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr T operator/( const T& vector, typename vec_traits<T>::scalar_type scalar )
+    template<detail::read_vec4_type T>
+    [[nodiscard]] inline constexpr vec_value<T> operator/( const T& vector, vec_scalar<T> scalar )
     {
-        T v;
+        vec_value<T> v;
         W(v) = W(vector) / scalar;
         X(v) = X(vector) / scalar;
         Y(v) = Y(vector) / scalar;
@@ -84,9 +89,11 @@ namespace sqg
         return v;
     }
 
-    template<detail::vec4_type T>
-    [[nodiscard]] inline constexpr bool operator==( const T& a, const T& b )
+    template<detail::read_vec4_type V1, detail::read_vec4_type V2>
+    [[nodiscard]] inline constexpr bool operator==( const V1& a, const V2& b )
     {
+        static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
+
         return 
             W(a) == W(b) && 
             X(a) == X(b) &&

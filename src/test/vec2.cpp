@@ -1,5 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include <sqg.h>
+#include <sqg_vec.h>
 
 template<typename T>
 struct Vector2

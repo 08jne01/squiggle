@@ -2,6 +2,7 @@
 #include "sqg_struct.h"
 #include "sqg_mat22.h"
 #include "sqg_mat33.h"
+#include "sqg_mat44.h"
 
 namespace sqg
 {
@@ -12,4 +13,6 @@ namespace sqg
         set_identity(m);
         return m;
     }
+
+    
 }

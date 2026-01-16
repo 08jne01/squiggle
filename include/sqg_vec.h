@@ -1,5 +1,6 @@
 #pragma once
 #include "sqg_struct.h"
+#include "sqg_traits.h"
 
 #include "sqg_vec2.h"
 #include "sqg_vec3.h"

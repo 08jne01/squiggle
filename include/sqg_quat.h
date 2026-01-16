@@ -23,9 +23,9 @@ namespace sqg
 
     // Returns vector part of quaternion
     template<detail::quat_type T>
-    inline constexpr vec3<typename vec_traits<T>::scalar_type> V( const T& quaternion )
+    inline constexpr vec3<vec_scalar<T>> vector_component( const T& quaternion )
     {
-        vec3<typename vec_traits<T>::scalar_type> v;
+        vec3<vec_scalar<T>> v;
         X(v) = X(quaternion);
         Y(v) = Y(quaternion);
         Z(v) = Z(quaternion);

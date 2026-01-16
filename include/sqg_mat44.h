@@ -1,5 +1,7 @@
 #pragma once
 #include "sqg_concepts.h"
+#include "sqg_mat_view.h"
+#include "sqg_vec4.h"
 
 namespace sqg
 {
@@ -52,9 +54,43 @@ namespace sqg
         A33(matrix) = one;
     }
 
-    template<detail::mat44_type M44, detail::read_mat33_type M33, detail::vec3_type V3> 
-    inline constexpr void set_transform( M44& matrix, const M33& orientation, const V3& position )
+    template<detail::read_mat44_type M1, detail::read_mat44_type M2>
+    [[nodiscard]] inline constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
-        col<0>(matrix) = col<0>(orientation);
+        mat_value2<M1,M2> m;
+        A00(m) = sqg::dot(sqg::row<0>(a), sqg::col<0>(b));
+        A01(m) = sqg::dot(sqg::row<0>(a), sqg::col<1>(b));
+        A02(m) = sqg::dot(sqg::row<0>(a), sqg::col<2>(b));
+        A03(m) = sqg::dot(sqg::row<0>(a), sqg::col<3>(b));
+
+        A10(m) = sqg::dot(sqg::row<1>(a), sqg::col<0>(b));
+        A11(m) = sqg::dot(sqg::row<1>(a), sqg::col<1>(b));
+        A12(m) = sqg::dot(sqg::row<1>(a), sqg::col<2>(b));
+        A13(m) = sqg::dot(sqg::row<1>(a), sqg::col<3>(b));
+
+        A20(m) = sqg::dot(sqg::row<2>(a), sqg::col<0>(b));
+        A21(m) = sqg::dot(sqg::row<2>(a), sqg::col<1>(b));
+        A22(m) = sqg::dot(sqg::row<2>(a), sqg::col<2>(b));
+        A23(m) = sqg::dot(sqg::row<2>(a), sqg::col<3>(b));
+
+        A30(m) = sqg::dot(sqg::row<3>(a), sqg::col<0>(b));
+        A31(m) = sqg::dot(sqg::row<3>(a), sqg::col<1>(b));
+        A32(m) = sqg::dot(sqg::row<3>(a), sqg::col<2>(b));
+        A33(m) = sqg::dot(sqg::row<3>(a), sqg::col<3>(b));
+        return m;
+    }
+
+    template<detail::mat44_type M> inline constexpr void transpose(M& matrix)
+    {
+        // xx 01 02 03
+        // 10 xx 12 13
+        // 20 21 xx 23
+        // 30 31 32 xx
+        std::swap( A01(matrix), A10(matrix) );
+        std::swap( A02(matrix), A20(matrix) );
+        std::swap( A03(matrix), A30(matrix) );
+        std::swap( A12(matrix), A21(matrix) );
+        std::swap( A13(matrix), A31(matrix) );
+        std::swap( A23(matrix), A32(matrix) );
     }
 }
