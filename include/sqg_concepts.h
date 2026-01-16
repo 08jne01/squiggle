@@ -118,7 +118,7 @@ namespace sqg::detail
 
     template<typename T>
     concept mat_type = requires(T v) {
-        requires std::same_as<typename mat_traits<T>::type, T>;
+        //requires std::same_as<typename mat_traits<T>::type, T>;
         { mat_traits<T>::n_dims };
         { typename mat_traits<T>::scalar_type{} };
         { typename mat_traits<T>::scalar_type{0} };
@@ -133,7 +133,7 @@ namespace sqg::detail
 
     template<typename T, int row, int col>
     concept mat_read = requires( T cm ) {
-        { mat_traits<std::remove_const_t<T>>::template A<row,col>(cm) } -> std::same_as<typename mat_traits<std::remove_const_t<T>>::scalar_type>;
+        { mat_traits<std::remove_const_t<T>>::template A<row,col>(cm) } -> std::convertible_to<typename mat_traits<std::remove_const_t<T>>::scalar_type>;
     };
 
     template<typename T, int row, int col>
@@ -152,11 +152,11 @@ namespace sqg::detail
 
     template<typename T>
     concept mat22_write = requires() {
-        requires mat_read<const T, 0,0>;
-        requires mat_read<const T, 0,1>;
+        requires mat_read<T, 0,0>;
+        requires mat_read<T, 0,1>;
 
-        requires mat_read<const T, 1,0>;
-        requires mat_read<const T, 1,1>;
+        requires mat_read<T, 1,0>;
+        requires mat_read<T, 1,1>;
     };
 
     template<typename T>
@@ -176,17 +176,17 @@ namespace sqg::detail
 
     template<typename T>
     concept mat33_write = requires() {
-        requires mat_read<const T, 0,0>;
-        requires mat_read<const T, 0,1>;
-        requires mat_read<const T, 0,2>;
+        requires mat_read<T, 0,0>;
+        requires mat_read<T, 0,1>;
+        requires mat_read<T, 0,2>;
 
-        requires mat_read<const T, 1,0>;
-        requires mat_read<const T, 1,1>;
-        requires mat_read<const T, 1,2>;
+        requires mat_read<T, 1,0>;
+        requires mat_read<T, 1,1>;
+        requires mat_read<T, 1,2>;
 
-        requires mat_read<const T, 2,0>;
-        requires mat_read<const T, 2,1>;
-        requires mat_read<const T, 2,2>;
+        requires mat_read<T, 2,0>;
+        requires mat_read<T, 2,1>;
+        requires mat_read<T, 2,2>;
     };
 
     template<typename T>
@@ -214,25 +214,25 @@ namespace sqg::detail
 
     template<typename T>
     concept mat44_write = requires() {
-        requires mat_write<const T, 0,0>;
-        requires mat_write<const T, 0,1>;
-        requires mat_write<const T, 0,2>;
-        requires mat_write<const T, 0,3>;
+        requires mat_write<T, 0,0>;
+        requires mat_write<T, 0,1>;
+        requires mat_write<T, 0,2>;
+        requires mat_write<T, 0,3>;
 
-        requires mat_write<const T, 1,0>;
-        requires mat_write<const T, 1,1>;
-        requires mat_write<const T, 1,2>;
-        requires mat_write<const T, 1,3>;
+        requires mat_write<T, 1,0>;
+        requires mat_write<T, 1,1>;
+        requires mat_write<T, 1,2>;
+        requires mat_write<T, 1,3>;
 
-        requires mat_write<const T, 2,0>;
-        requires mat_write<const T, 2,1>;
-        requires mat_write<const T, 2,2>;
-        requires mat_write<const T, 2,3>;
+        requires mat_write<T, 2,0>;
+        requires mat_write<T, 2,1>;
+        requires mat_write<T, 2,2>;
+        requires mat_write<T, 2,3>;
 
-        requires mat_write<const T, 3,0>;
-        requires mat_write<const T, 3,1>;
-        requires mat_write<const T, 3,2>;
-        requires mat_write<const T, 3,3>;
+        requires mat_write<T, 3,0>;
+        requires mat_write<T, 3,1>;
+        requires mat_write<T, 3,2>;
+        requires mat_write<T, 3,3>;
     };
 
 
