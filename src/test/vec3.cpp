@@ -275,3 +275,8 @@ TEST_CASE("vec3")
         not_equal( v0, v4 );
     }
 }
+
+TEST_CASE("Testing")
+{
+    sqg::quat<float> q = sqg::rotx_quat(4.0f);
+}

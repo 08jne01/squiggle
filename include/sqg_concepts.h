@@ -8,9 +8,6 @@ namespace sqg
 
     template<typename T>
     struct mat_traits;
-
-    template<typename T>
-    struct quat_traits;
 }
 
 
@@ -122,6 +119,12 @@ namespace sqg::detail
     };
 
     template<typename T>
+    concept quat_type = requires() {
+        requires vec4_type<T>;
+        requires std::floating_point<typename vec_traits<T>::scalar_type>;
+    };
+
+    template<typename T>
     concept mat44_type = requires( const T cm, T m ) {
         requires mat_type<T>;
         requires mat_traits<T>::n_dims == 4;
@@ -145,22 +148,5 @@ namespace sqg::detail
         requires mat_access<T,3,1>;
         requires mat_access<T,3,2>;
         requires mat_access<T,3,3>;
-    };
-
-    // quaternion
-    template<typename T>
-    concept quat_type = requires(const T cv, T v) {
-        { typename quat_traits<T>::scalar_type{} };
-        { typename quat_traits<T>::scalar_type{0} };
-        { typename quat_traits<T>::scalar_type{1} };
-        { quat_traits<T>::W(cv) } -> std::same_as<typename quat_traits<T>::scalar_type>;
-        { quat_traits<T>::X(cv) } -> std::same_as<typename quat_traits<T>::scalar_type>;
-        { quat_traits<T>::Y(cv) } -> std::same_as<typename quat_traits<T>::scalar_type>;
-        { quat_traits<T>::Z(cv) } -> std::same_as<typename quat_traits<T>::scalar_type>;
-
-        { quat_traits<T>::W(v) } -> std::same_as<typename quat_traits<T>::scalar_type&>;
-        { quat_traits<T>::X(v) } -> std::same_as<typename quat_traits<T>::scalar_type&>;
-        { quat_traits<T>::Y(v) } -> std::same_as<typename quat_traits<T>::scalar_type&>;
-        { quat_traits<T>::Z(v) } -> std::same_as<typename quat_traits<T>::scalar_type&>;
     };
 }

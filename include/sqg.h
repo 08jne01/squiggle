@@ -5,4 +5,7 @@
 #include "sqg_struct.h"
 #include "sqg_vec.h"
 #include "sqg_mat.h"
+#include "sqg_quat.h"
+
+
 #include "sqg_mat33_vec3.h"

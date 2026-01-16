@@ -91,6 +91,17 @@ namespace sqg
         }
     };
 
+    // quaternion - same as vec4 essentially
+
+    template<std::floating_point T>
+    struct quat
+    {   // Initialise to identity
+        T w{1};
+        T x{0};
+        T y{0};
+        T z{0};
+    };
+
     // ========== Traits ========== //
 
     // 2 dimensions
@@ -175,6 +186,25 @@ namespace sqg
         static inline constexpr scalar_type& Y(type& v) { return v.y; }
         static inline constexpr scalar_type& Z(type& v) { return v.z; }
         static inline constexpr scalar_type& W(type& v) { return v.w; }
+    };
+
+    // quat
+    template<typename T>
+    struct vec_traits<quat<T>>
+    {
+        using scalar_type = T;
+        using type = quat<T>;
+        static constexpr int n_dims = 4;
+
+        static inline constexpr scalar_type W(const type& v) { return v.w; }
+        static inline constexpr scalar_type X(const type& v) { return v.x; }
+        static inline constexpr scalar_type Y(const type& v) { return v.y; }
+        static inline constexpr scalar_type Z(const type& v) { return v.z; }
+
+        static inline constexpr scalar_type& W(type& v) { return v.w; }
+        static inline constexpr scalar_type& X(type& v) { return v.x; }
+        static inline constexpr scalar_type& Y(type& v) { return v.y; }
+        static inline constexpr scalar_type& Z(type& v) { return v.z; }
     };
 }
 
