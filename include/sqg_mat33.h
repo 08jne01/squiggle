@@ -178,7 +178,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rotation matrix from axis and angle
-    template<concepts::mat33_type M, concepts::read_vec3_type V> SQUIGGLE_INLINE void set_rot( M& matrix, const V& vector, mat_scalar<M> angle )
+    template<concepts::mat33_type M, concepts::read_vec3_type V> SQUIGGLE_INLINE void set_rot( M& matrix, const V& axis, mat_scalar<M> angle )
     {
         static_assert( std::same_as<mat_scalar<M>,vec_scalar<V>>, "Scalar type must match for this operation" );
 
@@ -186,24 +186,29 @@ namespace sqg
         const scalar cosa = std::cos(angle);
         const scalar one_cosa = scalar{1} - cosa;
         const scalar sina = std::sin(angle);
+
+        const auto x = X(axis);
+        const auto y = Y(axis);
+        const auto z = Z(axis);
+
         // Diagonal
-        A00(matrix,  X(vector) * X(vector) * one_cosa + cosa);
-        A11(matrix,  Y(vector) * Y(vector) * one_cosa + cosa);
-        A22(matrix,  Z(vector) * Z(vector) * one_cosa + cosa);
+        A00(matrix,  x * x * one_cosa + cosa);
+        A11(matrix,  y * y * one_cosa + cosa);
+        A22(matrix,  z * z * one_cosa + cosa);
 
         // Off Diagonal
-        const scalar xy_one_cosa = X(vector) * Y(vector) * one_cosa;
-        const scalar zsina = Z(vector) * sina;
+        const scalar xy_one_cosa = x * y * one_cosa;
+        const scalar zsina = z * sina;
         A01(matrix,  xy_one_cosa - zsina);
         A10(matrix,  xy_one_cosa + zsina);
 
-        const scalar xz_one_cosa = X(vector) * Z(vector) * one_cosa;
-        const scalar ysina = Y(vector) * sina;
+        const scalar xz_one_cosa = x * z * one_cosa;
+        const scalar ysina = y * sina;
         A02(matrix,  xz_one_cosa + ysina);
         A20(matrix,  xz_one_cosa - ysina);
 
-        const scalar yz_one_cosa = Y(vector) * Z(vector) * one_cosa;
-        const scalar xsina = X(vector) * sina;
+        const scalar yz_one_cosa = y * z * one_cosa;
+        const scalar xsina = x * sina;
         A12(matrix,  yz_one_cosa - xsina);
         A21(matrix,  yz_one_cosa + xsina);
     }
@@ -229,10 +234,10 @@ namespace sqg
         return m;
     }
 
-    template<concepts::read_vec3_type V> SQUIGGLE_INLINE mat33<vec_scalar<V>> rot_mat( const V& vector, vec_scalar<V> angle )
+    template<concepts::read_vec3_type V> SQUIGGLE_INLINE mat33<vec_scalar<V>> rot_mat( const V& axis, vec_scalar<V> angle )
     {
         mat33<vec_scalar<V>> m;
-        set_rot(m, vector, angle);
+        set_rot(m, axis, angle);
         return m;
     }
 }
