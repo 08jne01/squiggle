@@ -14,5 +14,11 @@ namespace sqg
         return m;
     }
 
+    template<concepts::mat_type M1, concepts::mat_type M2>
+    [[nodiscard]] SQUIGGLE_INLINE constexpr bool operator!=(const M1& a, const M2& b)
+    {
+        return ! ( a == b );
+    } 
+
     
 }

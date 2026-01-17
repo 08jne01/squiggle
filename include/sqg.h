@@ -15,4 +15,3 @@
 
 #include "sqg_mat22_vec2.h"
 #include "sqg_mat33_vec3.h"
-#include "sqg_quat_vec3.h"

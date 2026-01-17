@@ -19,8 +19,9 @@ This library is aimed at game-developement and physics simulation. As such only 
 
 ## Example
 
+### Simple Operations
+
 ```cpp
-// Simple Operations
 sqg::vec3f v0;
 sqg::vec3f v1;
 sqg::vec3f v2;
@@ -32,8 +33,9 @@ v4 /= 10.0f;
 v0 = v4 / 10.0f;
 ```
 
+### Matrix Operations
+
 ```cpp
-// Matrix Operations
 mat33f m = sqg::identity_mat<float,3>();
 const sqg::vec3f x = { 1.0f, 0.0f, 0.0f };
 const sqg::vec3f y = { 1.0f, 0.0f, 1.0f };
@@ -47,8 +49,9 @@ const float det_m = sqg::determinant( sqg::transposed(m) )
 
 ```
 
+### Quaternions
+
 ```cpp
-// Quaternions
 void rotate_camera(sqg::vec3f& direction, const sqg::vec3f& up, const sqg::vec2f mouse)
 {
     const sqg::vec3f pitch_axis = sqg::cross(up, direction);
@@ -60,6 +63,8 @@ void rotate_camera(sqg::vec3f& direction, const sqg::vec3f& up, const sqg::vec2f
     direction = yaw_rotation * direction;
 }
 ```
+
+### Transform
 
 ```cpp
 sqg::mat33f orientation;
@@ -73,7 +78,7 @@ sqg::position(transform) = position;
 
 sqg::vec3f local_point;
 // transform local point to world space
-// local_point is converted to vec4 view with 1 as last component for transformation
+// local_point is viewed as vec4 view with 1 as last component for transformation
 sqg::vec3f world_point = transform * local_point;
 
 ```

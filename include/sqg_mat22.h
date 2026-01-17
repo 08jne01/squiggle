@@ -90,4 +90,14 @@ namespace sqg
         set_rot2(m, angle);
         return m;
     }
+
+    template<concepts::read_mat22_type M1, concepts::read_mat22_type M2>
+    [[nodiscard]] SQUIGGLE_INLINE constexpr bool operator==( const M1& a, const M2& b )
+    {
+        static_assert( std::same_as<mat_scalar<M1>,mat_scalar<M2>>, "Scalar type must match for this operation" );
+
+        return 
+            row<0>(a) == row<0>(b) &&
+            row<1>(a) == row<1>(b);
+    }
 }

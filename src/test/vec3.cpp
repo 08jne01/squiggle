@@ -4,7 +4,6 @@
 #include <sqg_vec.h>
 #include <catch2/catch_get_random_seed.hpp>
 #include <sqg_quat.h>
-#include <sqg_quat_vec3.h>
 
 template<typename T>
 struct Vector3

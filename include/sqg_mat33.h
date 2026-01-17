@@ -58,7 +58,7 @@ namespace sqg
     template<concepts::read_mat33_type M1, concepts::read_mat33_type M2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
-        static_assert( std::same_as<vec_scalar<M1>,vec_scalar<M2>>, "Scalar type must match for this operation" );
+        static_assert( std::same_as<mat_scalar<M1>,mat_scalar<M2>>, "Scalar type must match for this operation" );
 
         mat_value2<M1,M2> m;
         A00(m,  sqg::dot(sqg::row<0>(a), sqg::col<0>(b)));
@@ -239,5 +239,16 @@ namespace sqg
         mat33<vec_scalar<V>> m;
         set_rot(m, axis, angle);
         return m;
+    }
+
+    template<concepts::read_mat33_type M1, concepts::read_mat33_type M2>
+    [[nodiscard]] SQUIGGLE_INLINE constexpr bool operator==( const M1& a, const M2& b )
+    {
+        static_assert( std::same_as<mat_scalar<M1>,mat_scalar<M2>>, "Scalar type must match for this operation" );
+
+        return 
+            row<0>(a) == row<0>(b) &&
+            row<1>(a) == row<1>(b) &&
+            row<2>(a) == row<2>(b);
     }
 }
