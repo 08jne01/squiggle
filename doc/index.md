@@ -10,6 +10,8 @@ The primary motivation for this additional library was to create a modern vector
 
 This library is aimed at game-developement and physics simulation. As such only 2,3,4 dimension vectors and square matricies are implemented, along with quaternions.
 
+See the [squiggle docs here](https://08jne01.github.io/squiggle/).
+
 ## Features
 
 - Free functions which operate on concepts only
