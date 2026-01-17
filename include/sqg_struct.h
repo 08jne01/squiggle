@@ -100,6 +100,13 @@ namespace sqg
         T x{0};
         T y{0};
         T z{0};
+
+        template<typename R>
+        SQUIGGLE_INLINE constexpr explicit operator R() const {
+            R r;
+            assign(r, *this);
+            return r;
+        }
     };
 
     // ========== Traits ========== //
