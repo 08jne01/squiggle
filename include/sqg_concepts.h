@@ -16,7 +16,7 @@ namespace sqg
     template<typename T>
     struct vec_traits;
 
-    // Determains what value gets selected, default to left argument
+    // Determines what value gets selected, default to left argument
     template<typename V1, typename V2>
     struct deduce_vec_traits
     {
@@ -26,7 +26,7 @@ namespace sqg
     template<typename T>
     struct mat_traits;
 
-    // Determains what value gets selected, default to left argument
+    // Determines what value gets selected, default to left argument
     template<typename M1, typename M2>
     struct deduce_mat_traits
     {
@@ -58,8 +58,13 @@ namespace sqg::detail
     };
 
     template<typename T>
-    concept vec_x_write = requires(T v) {
+    concept vec_x_write_ref = requires(T v) {
         { vec_traits<T>::X(v) } -> std::same_as<typename vec_traits<T>::scalar_type&>;
+    };
+
+    template<typename T>
+    concept vec_x_write = requires(T v) {
+        { vec_traits<T>::X(v, typename vec_traits<T>::scalar_type{}) };
     };
 
     template<typename T>
@@ -68,8 +73,13 @@ namespace sqg::detail
     };
 
     template<typename T>
-    concept vec_y_write = requires(T v) {
+    concept vec_y_write_ref = requires(T v) {
         { vec_traits<T>::Y(v) } -> std::same_as<typename vec_traits<T>::scalar_type&>;
+    };
+
+    template<typename T>
+    concept vec_y_write = requires(T v) {
+        { vec_traits<T>::Y(v,typename vec_traits<T>::scalar_type{}) };
     };
 
     template<typename T>
@@ -78,8 +88,13 @@ namespace sqg::detail
     };
 
     template<typename T>
-    concept vec_z_write = requires(T v) {
+    concept vec_z_write_ref = requires(T v) {
         { vec_traits<T>::Z(v) } -> std::same_as<typename vec_traits<T>::scalar_type&>;
+    };
+
+    template<typename T>
+    concept vec_z_write = requires(T v) {
+        { vec_traits<T>::Z(v,typename vec_traits<T>::scalar_type{}) };
     };
 
     template<typename T>
@@ -88,8 +103,13 @@ namespace sqg::detail
     };
 
     template<typename T>
-    concept vec_w_write = requires(T v) {
+    concept vec_w_write_ref = requires(T v) {
         { vec_traits<T>::W(v) } -> std::same_as<typename vec_traits<T>::scalar_type&>;
+    };
+
+    template<typename T>
+    concept vec_w_write = requires(T v) {
+        { vec_traits<T>::W(v,typename vec_traits<T>::scalar_type{}) };
     };
 
     template<typename T>
@@ -100,8 +120,8 @@ namespace sqg::detail
 
     template<typename T>
     concept vec2_write = requires() {
-        requires vec_x_write<T>;
-        requires vec_y_write<T>;
+        requires vec_x_write<T> || vec_x_write_ref<T>;
+        requires vec_y_write<T> || vec_y_write_ref<T>;
     };
 
     template<typename T>
@@ -113,9 +133,9 @@ namespace sqg::detail
 
     template<typename T>
     concept vec3_write = requires() {
-        requires vec_x_write<T>;
-        requires vec_y_write<T>;
-        requires vec_z_write<T>;
+        requires vec_x_write<T> || vec_x_write_ref<T>;
+        requires vec_y_write<T> || vec_y_write_ref<T>;
+        requires vec_z_write<T> || vec_z_write_ref<T>;
     };
 
     template<typename T>
@@ -128,10 +148,10 @@ namespace sqg::detail
 
     template<typename T>
     concept vec4_write = requires() {
-        requires vec_x_write<T>;
-        requires vec_y_write<T>;
-        requires vec_z_write<T>;
-        requires vec_w_write<T>;
+        requires vec_x_write<T> || vec_x_write_ref<T>;
+        requires vec_y_write<T> || vec_y_write_ref<T>;
+        requires vec_z_write<T> || vec_z_write_ref<T>;
+        requires vec_w_write<T> || vec_w_write_ref<T>;
     };
 
     template<typename T>
@@ -155,8 +175,13 @@ namespace sqg::detail
     };
 
     template<typename T, int row, int col>
-    concept mat_write = requires( T m ) {
+    concept mat_write_ref = requires( T m ) {
         { mat_traits<T>::template A<row,col>(m) } -> std::same_as<typename mat_traits<T>::scalar_type&>;
+    };
+
+    template<typename T, int row, int col>
+    concept mat_write = requires( T m ) {
+        { mat_traits<T>::template A<row,col>(m,typename mat_traits<T>::scalar_type{}) };
     };
 
     template<typename T>
@@ -170,11 +195,11 @@ namespace sqg::detail
 
     template<typename T>
     concept mat22_write = requires() {
-        requires mat_read<T, 0,0>;
-        requires mat_read<T, 0,1>;
+        requires mat_write<T, 0,0> || mat_write_ref<T, 0,0>;
+        requires mat_write<T, 0,1> || mat_write_ref<T, 0,1>;
 
-        requires mat_read<T, 1,0>;
-        requires mat_read<T, 1,1>;
+        requires mat_write<T, 1,0> || mat_write_ref<T, 1,0>;
+        requires mat_write<T, 1,1> || mat_write_ref<T, 1,1>;
     };
 
     template<typename T>
@@ -194,17 +219,17 @@ namespace sqg::detail
 
     template<typename T>
     concept mat33_write = requires() {
-        requires mat_read<T, 0,0>;
-        requires mat_read<T, 0,1>;
-        requires mat_read<T, 0,2>;
+        requires mat_write<T, 0,0> || mat_write_ref<T, 0,0>;
+        requires mat_write<T, 0,1> || mat_write_ref<T, 0,1>;
+        requires mat_write<T, 0,2> || mat_write_ref<T, 0,2>;
 
-        requires mat_read<T, 1,0>;
-        requires mat_read<T, 1,1>;
-        requires mat_read<T, 1,2>;
+        requires mat_write<T, 1,0> || mat_write_ref<T, 1,0>;
+        requires mat_write<T, 1,1> || mat_write_ref<T, 1,1>;
+        requires mat_write<T, 1,2> || mat_write_ref<T, 1,2>;
 
-        requires mat_read<T, 2,0>;
-        requires mat_read<T, 2,1>;
-        requires mat_read<T, 2,2>;
+        requires mat_write<T, 2,0> || mat_write_ref<T, 2,0>;
+        requires mat_write<T, 2,1> || mat_write_ref<T, 2,1>;
+        requires mat_write<T, 2,2> || mat_write_ref<T, 2,2>;
     };
 
     template<typename T>
@@ -232,25 +257,25 @@ namespace sqg::detail
 
     template<typename T>
     concept mat44_write = requires() {
-        requires mat_write<T, 0,0>;
-        requires mat_write<T, 0,1>;
-        requires mat_write<T, 0,2>;
-        requires mat_write<T, 0,3>;
+        requires mat_write<T, 0,0> || mat_write_ref<T, 0,0>;
+        requires mat_write<T, 0,1> || mat_write_ref<T, 0,1>;
+        requires mat_write<T, 0,2> || mat_write_ref<T, 0,2>;
+        requires mat_write<T, 0,3> || mat_write_ref<T, 0,3>;
 
-        requires mat_write<T, 1,0>;
-        requires mat_write<T, 1,1>;
-        requires mat_write<T, 1,2>;
-        requires mat_write<T, 1,3>;
+        requires mat_write<T, 1,0> || mat_write_ref<T, 1,0>;
+        requires mat_write<T, 1,1> || mat_write_ref<T, 1,1>;
+        requires mat_write<T, 1,2> || mat_write_ref<T, 1,2>;
+        requires mat_write<T, 1,3> || mat_write_ref<T, 1,3>;
 
-        requires mat_write<T, 2,0>;
-        requires mat_write<T, 2,1>;
-        requires mat_write<T, 2,2>;
-        requires mat_write<T, 2,3>;
+        requires mat_write<T, 2,0> || mat_write_ref<T, 2,0>;
+        requires mat_write<T, 2,1> || mat_write_ref<T, 2,1>;
+        requires mat_write<T, 2,2> || mat_write_ref<T, 2,2>;
+        requires mat_write<T, 2,3> || mat_write_ref<T, 2,3>;
 
-        requires mat_write<T, 3,0>;
-        requires mat_write<T, 3,1>;
-        requires mat_write<T, 3,2>;
-        requires mat_write<T, 3,3>;
+        requires mat_write<T, 3,0> || mat_write_ref<T, 3,0>;
+        requires mat_write<T, 3,1> || mat_write_ref<T, 3,1>;
+        requires mat_write<T, 3,2> || mat_write_ref<T, 3,2>;
+        requires mat_write<T, 3,3> || mat_write_ref<T, 3,3>;
     };
 
 

@@ -82,7 +82,7 @@ namespace sqg
         static_assert( detail::valid_vec_view<row_view,M>, "Must Satisfy vec constraints" );
     };
 
-    template<detail::mat_type M, int row>
+    template<detail::mat_type M, int col>
     struct col_view
     {
         M& matrix;

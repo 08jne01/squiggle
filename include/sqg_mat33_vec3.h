@@ -13,25 +13,25 @@ namespace sqg
         const scalar sina = std::sin(angle);
         mat33<scalar> m;
         // Diagonal
-        A00(m) = X(vector) * X(vector) * one_cosa + cosa;
-        A11(m) = Y(vector) * Y(vector) * one_cosa + cosa;
-        A22(m) = Z(vector) * Z(vector) * one_cosa + cosa;
+        A00(m,  X(vector) * X(vector) * one_cosa + cosa);
+        A11(m,  Y(vector) * Y(vector) * one_cosa + cosa);
+        A22(m,  Z(vector) * Z(vector) * one_cosa + cosa);
 
         // Off Diagonal
         const scalar xy_one_cosa = X(vector) * Y(vector) * one_cosa;
         const scalar zsina = Z(vector) * sina;
-        A01(m) = xy_one_cosa - zsina;
-        A10(m) = xy_one_cosa + zsina;
+        A01(m,  xy_one_cosa - zsina);
+        A10(m,  xy_one_cosa + zsina);
 
         const scalar xz_one_cosa = X(vector) * Z(vector) * one_cosa;
         const scalar ysina = Y(vector) * sina;
-        A02(m) = xz_one_cosa + ysina;
-        A20(m) = xz_one_cosa - ysina;
+        A02(m,  xz_one_cosa + ysina);
+        A20(m,  xz_one_cosa - ysina);
 
         const scalar yz_one_cosa = Y(vector) * Z(vector) * one_cosa;
         const scalar xsina = X(vector) * sina;
-        A12(m) = yz_one_cosa - xsina;
-        A21(m) = yz_one_cosa + xsina;
+        A12(m,  yz_one_cosa - xsina);
+        A21(m,  yz_one_cosa + xsina);
 
         return m;
     }

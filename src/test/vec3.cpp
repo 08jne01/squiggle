@@ -32,6 +32,7 @@ namespace sqg
 TEST_CASE("vec3")
 {
 
+    static_assert( sqg::detail::vec2_type<sqg::vec2<int>>, "Should be vec2" );
     static_assert( ! sqg::detail::vec3_type<sqg::vec2<int>>, "Shouldn't be vec3" );
     static_assert( ! sqg::detail::vec4_type<sqg::vec2<int>>, "Shouldn't be vec4" );
     static_assert( ! sqg::detail::mat22_type<sqg::vec2<int>>, "Shouldn't be mat22" );
@@ -42,7 +43,6 @@ TEST_CASE("vec3")
     SECTION("assign")
     {
         Vector3<int> v = sqg::vec3<int>{ 1, 2, 3 };
-        sqg::X(v);
         REQUIRE( v.a[0] == 1 );
         REQUIRE( v.a[1] == 2 );
         REQUIRE( v.a[2] == 3 );

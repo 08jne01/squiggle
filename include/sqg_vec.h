@@ -21,8 +21,8 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec2<T> scalar_cast( const V& vector )
     {
         vec2<T> v;
-        X(v) = static_cast<T>(X(vector));
-        Y(v) = static_cast<T>(Y(vector));
+        X(v,  static_cast<T>(X(vector)));
+        Y(v,  static_cast<T>(Y(vector)));
         return v;
     }
 
@@ -30,9 +30,9 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec3<T> scalar_cast( const V& vector )
     {
         vec3<T> v;
-        X(v) = static_cast<T>(X(vector));
-        Y(v) = static_cast<T>(Y(vector));
-        Z(v) = static_cast<T>(Z(vector));
+        X(v,  static_cast<T>(X(vector)));
+        Y(v,  static_cast<T>(Y(vector)));
+        Z(v,  static_cast<T>(Z(vector)));
         return v;
     }
 
@@ -40,10 +40,10 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec4<T> scalar_cast( const V& vector )
     {
         vec4<T> v;
-        X(v) = static_cast<T>(X(vector));
-        Y(v) = static_cast<T>(Y(vector));
-        Z(v) = static_cast<T>(Z(vector));
-        W(v) = static_cast<T>(W(vector));
+        X(v,  static_cast<T>(X(vector)));
+        Y(v,  static_cast<T>(Y(vector)));
+        Z(v,  static_cast<T>(Z(vector)));
+        W(v,  static_cast<T>(W(vector)));
         return v;
     }
 

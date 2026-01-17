@@ -6,16 +6,17 @@ namespace sqg
     template<detail::vec2_type V1, detail::read_vec2_type V2>
     SQUIGGLE_INLINE constexpr void assign( V1& destination, const V2& source )
     {
-        X(destination) = X(source);
-        Y(destination) = Y(source);
+        static_assert( std::convertible_to<vec_scalar<V2>, vec_scalar<V1>>, "Source Scalar must be convertible to Destination Scalar" );
+        X(destination,  X(source));
+        Y(destination,  Y(source));
     }
 
     template<detail::vec2_type T>
     SQUIGGLE_INLINE constexpr void set_zero( T& vector )
     {
         constexpr vec_scalar<T> zero{0};
-        X(vector) = zero;
-        Y(vector) = zero;
+        X(vector,  zero);
+        Y(vector,  zero);
     }
 
     //https://math.stackexchange.com/questions/3158634/whats-the-cross-product-in-2-dimensions
@@ -37,8 +38,8 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator-( const T& vector )
     {
         vec_value<T> v;
-        X(v) = -X(vector);
-        Y(v) = -Y(vector);
+        X(v,  -X(vector));
+        Y(v,  -Y(vector));
         return v;
     }
 
@@ -48,8 +49,8 @@ namespace sqg
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
         vec_value2<V1,V2> v;
-        X(v) = X(a) + X(b);
-        Y(v) = Y(a) + Y(b);
+        X(v,  X(a) + X(b));
+        Y(v,  Y(a) + Y(b));
         return v;
     }
 
@@ -59,8 +60,8 @@ namespace sqg
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
         vec_value2<V1,V2> v;
-        X(v) = X(a) - X(b);
-        Y(v) = Y(a) - Y(b);
+        X(v,  X(a) - X(b));
+        Y(v,  Y(a) - Y(b));
         return v;
     }
 
@@ -68,8 +69,8 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator*( vec_scalar<T> scalar, const T& vector )
     {
         vec_value<T> v;
-        X(v) = scalar * X(vector);
-        Y(v) = scalar * Y(vector);
+        X(v,  scalar * X(vector));
+        Y(v,  scalar * Y(vector));
         return v;
     }
 
@@ -77,8 +78,8 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator/( const T& vector, vec_scalar<T> scalar )
     {
         vec_value<T> v;
-        X(v) = X(vector) / scalar;
-        Y(v) = Y(vector) / scalar;
+        X(v,  X(vector) / scalar);
+        Y(v,  Y(vector) / scalar);
         return v;
     }
 

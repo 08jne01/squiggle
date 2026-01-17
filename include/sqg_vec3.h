@@ -6,18 +6,19 @@ namespace sqg
     template<detail::vec3_type V1, detail::read_vec3_type V2>
     SQUIGGLE_INLINE constexpr void assign( V1& destination, const V2& source )
     {
-        X(destination) = X(source);
-        Y(destination) = Y(source);
-        Z(destination) = Z(source);
+        static_assert( std::convertible_to<vec_scalar<V2>, vec_scalar<V1>>, "Source Scalar must be convertible to Destination Scalar" );
+        X(destination,  X(source));
+        Y(destination,  Y(source));
+        Z(destination,  Z(source));
     }
 
     template<detail::vec3_type T>
     SQUIGGLE_INLINE constexpr void set_zero( T& vector )
     {
         constexpr vec_scalar<T> zero{0};
-        X(vector) = zero;
-        Y(vector) = zero;
-        Z(vector) = zero;
+        X(vector,  zero);
+        Y(vector,  zero);
+        Z(vector,  zero);
     }
 
     template<detail::read_vec3_type V1, detail::read_vec3_type V2>
@@ -26,9 +27,9 @@ namespace sqg
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
         vec_value2<V1,V2> v;
-        X(v) = Y(a) * Z(b) - Z(a) * Y(b);
-        Y(v) = Z(a) * X(b) - X(a) * Z(b);
-        Z(v) = X(a) * Y(b) - Y(a) * X(b);
+        X(v,  Y(a) * Z(b) - Z(a) * Y(b));
+        Y(v,  Z(a) * X(b) - X(a) * Z(b));
+        Z(v,  X(a) * Y(b) - Y(a) * X(b));
         return v;
     }
 
@@ -43,9 +44,9 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr T operator-( const T& vector )
     {
         vec_value<T> v;
-        X(v) = -X(vector);
-        Y(v) = -Y(vector);
-        Z(v) = -Z(vector);
+        X(v,  -X(vector));
+        Y(v,  -Y(vector));
+        Z(v,  -Z(vector));
         return v;
     }
 
@@ -55,9 +56,9 @@ namespace sqg
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
         vec_value2<V1,V2> v;
-        X(v) = X(a) + X(b);
-        Y(v) = Y(a) + Y(b);
-        Z(v) = Z(a) + Z(b);
+        X(v,  X(a) + X(b));
+        Y(v,  Y(a) + Y(b));
+        Z(v,  Z(a) + Z(b));
         return v;
     }
 
@@ -67,9 +68,9 @@ namespace sqg
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
         vec_value2<V1,V2> v;
-        X(v) = X(a) - X(b);
-        Y(v) = Y(a) - Y(b);
-        Z(v) = Z(a) - Z(b);
+        X(v,  X(a) - X(b));
+        Y(v,  Y(a) - Y(b));
+        Z(v,  Z(a) - Z(b));
         return v;
     }
 
@@ -77,9 +78,9 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator*( vec_scalar<T> scalar, const T& vector )
     {
         vec_value<T> v;
-        X(v) = scalar * X(vector);
-        Y(v) = scalar * Y(vector);
-        Z(v) = scalar * Z(vector);
+        X(v,  scalar * X(vector));
+        Y(v,  scalar * Y(vector));
+        Z(v,  scalar * Z(vector));
         return v;
     }
 
@@ -87,9 +88,9 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator/( const T& vector, vec_scalar<T> scalar )
     {
         vec_value<T> v;
-        X(v) = X(vector) / scalar;
-        Y(v) = Y(vector) / scalar;
-        Z(v) = Z(vector) / scalar;
+        X(v,  X(vector) / scalar);
+        Y(v,  Y(vector) / scalar);
+        Z(v,  Z(vector) / scalar);
         return v;
     }
 
