@@ -5,17 +5,17 @@ This file lists all the common vector functions, the syntax is close to C++ but 
 read_vec_type is any type that satisfies one of the following [concepts](concepts.md).
 
 ```cpp
-template<typename T> concept read_vec2_type;
-template<typename T> concept read_vec3_type;
-template<typename T> concept read_vec4_type;
+template<typename Scalar> concept read_vec2_type;
+template<typename Scalar> concept read_vec3_type;
+template<typename Scalar> concept read_vec4_type;
 ```
 
 vec_type is any type that satisfies one of the following [concepts](concepts.md).
 
 ```cpp
-template<typename T> concept vec2_type;
-template<typename T> concept vec3_type;
-template<typename T> concept vec4_type;
+template<typename Scalar> concept vec2_type;
+template<typename Scalar> concept vec3_type;
+template<typename Scalar> concept vec4_type;
 ```
 
 Note that for all functions which take two arguments it is implied the number of dimensions of each vector are the same.
