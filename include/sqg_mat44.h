@@ -5,7 +5,7 @@
 
 namespace sqg
 {
-    template<detail::mat44_type M1, detail::read_mat44_type M2> 
+    template<concepts::mat44_type M1, concepts::read_mat44_type M2> 
     SQUIGGLE_INLINE constexpr void assign( M1& destination, const M2& source )
     {
         static_assert( std::convertible_to<mat_scalar<M1>, mat_scalar<M2>>, "Source Scalar must be convertible to Destination Scalar" );
@@ -30,7 +30,7 @@ namespace sqg
         A33(destination,  A33(source));
     }
 
-    template<detail::mat44_type T> SQUIGGLE_INLINE constexpr void set_identity( T& matrix )
+    template<concepts::mat44_type T> SQUIGGLE_INLINE constexpr void set_identity( T& matrix )
     {
         constexpr typename mat_traits<T>::scalar_type zero{0}; 
         constexpr typename mat_traits<T>::scalar_type one{1}; 
@@ -55,7 +55,7 @@ namespace sqg
         A33(matrix,  one);
     }
 
-    template<detail::read_mat44_type M1, detail::read_mat44_type M2>
+    template<concepts::read_mat44_type M1, concepts::read_mat44_type M2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
         mat_value2<M1,M2> m;
@@ -81,7 +81,7 @@ namespace sqg
         return m;
     }
 
-    template<detail::mat44_type M> SQUIGGLE_INLINE constexpr void transpose(M& matrix)
+    template<concepts::mat44_type M> SQUIGGLE_INLINE constexpr void transpose(M& matrix)
     {
         // xx 01 02 03
         // 10 xx 12 13

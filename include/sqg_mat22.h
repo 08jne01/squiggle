@@ -1,14 +1,13 @@
 #pragma once
 #include "sqg_concepts.h"
 #include "sqg_mat_view.h"
-#include "sqg_struct.h"
 #include "sqg_vec2.h"
 
 #include <utility>
 #include <cmath>
 namespace sqg
 {
-    template<detail::mat22_type M1, detail::read_mat22_type M2> 
+    template<concepts::mat22_type M1, concepts::read_mat22_type M2> 
     SQUIGGLE_INLINE constexpr void assign( M1& destination, const M2& source )
     {
         static_assert( std::convertible_to<mat_scalar<M1>, mat_scalar<M2>>, "Source Scalar must be convertible to Destination Scalar" );
@@ -19,7 +18,7 @@ namespace sqg
         A11(destination,  A11(source));
     }
 
-    template<detail::mat22_type T> 
+    template<concepts::mat22_type T> 
     SQUIGGLE_INLINE constexpr void set_identity(T& matrix)
     {
         constexpr typename mat_traits<T>::scalar_type zero{0};
@@ -32,7 +31,7 @@ namespace sqg
         A11(matrix,  one);
     }
 
-    template<detail::read_mat22_type M1, detail::read_mat22_type M2>
+    template<concepts::read_mat22_type M1, concepts::read_mat22_type M2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
         mat_value2<M1,M2> m;
@@ -43,7 +42,7 @@ namespace sqg
         return m;
     }
 
-    template<detail::mat22_type M> 
+    template<concepts::mat22_type M> 
     SQUIGGLE_INLINE constexpr void transpose(M& matrix)
     {
         // xx 01
@@ -52,24 +51,29 @@ namespace sqg
     }
 
     //https://en.wikipedia.org/wiki/Determinant
-    template<detail::mat22_type M> 
+    template<concepts::mat22_type M> 
     SQUIGGLE_INLINE constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
     {
         return A00(matrix) * A11(matrix) - A10(matrix) * A01(matrix);
     }
 
-    // 2 dimensional rotation
-    template<typename T> SQUIGGLE_INLINE mat22<T> rot_mat2( T angle )
+    template<concepts::mat22_type M> SQUIGGLE_INLINE void set_rot2( M& matrix, mat_scalar<M> angle )
     {
-        using scalar = T;
+        using scalar = mat_scalar<M>;
         const scalar cosa = std::cos(angle);
         const scalar sina = std::sin(angle);
-
-        mat22<T> m;
-        A00(m,  cosa);
-        A01(m,  -sina);
+        A00(matrix,  cosa);
+        A01(matrix,  -sina);
         
-        A10(m,  sina);
-        A10(m,  cosa);
+        A10(matrix,  sina);
+        A10(matrix,  cosa);
+    }
+
+    // 2 dimensional rotation
+    template<typename T> SQUIGGLE_INLINE mat22<T> rot2_mat( T angle )
+    {
+        mat22<T> m;
+        set_rot2(m, angle);
+        return m;
     }
 }

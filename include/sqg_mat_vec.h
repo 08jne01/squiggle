@@ -1,9 +1,13 @@
 #pragma once
 #include "sqg_concepts.h"
+#include "sqg_mat_view.h"
+#include "sqg_vec2.h"
+#include "sqg_vec3.h"
+#include "sqg_vec4.h"
 
 namespace sqg
 {
-    template<detail::read_mat22_type M, detail::read_vec2_type V>
+    template<concepts::read_mat22_type M, concepts::read_vec2_type V>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<V> operator*( const M& matrix, const V& vector )
     {
         V v;
@@ -12,7 +16,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::read_mat33_type M, detail::read_vec3_type V>
+    template<concepts::read_mat33_type M, concepts::read_vec3_type V>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<V> operator*( const M& matrix, const V& vector )
     {
         V v;
@@ -22,7 +26,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::read_mat44_type M, detail::read_vec4_type V>
+    template<concepts::read_mat44_type M, concepts::read_vec4_type V>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<V> operator*( const M& matrix, const V& vector )
     {
         V v;

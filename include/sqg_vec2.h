@@ -3,7 +3,7 @@
 #include <cmath>
 namespace sqg
 {
-    template<detail::vec2_type V1, detail::read_vec2_type V2>
+    template<concepts::vec2_type V1, concepts::read_vec2_type V2>
     SQUIGGLE_INLINE constexpr void assign( V1& destination, const V2& source )
     {
         static_assert( std::convertible_to<vec_scalar<V2>, vec_scalar<V1>>, "Source Scalar must be convertible to Destination Scalar" );
@@ -11,7 +11,7 @@ namespace sqg
         Y(destination,  Y(source));
     }
 
-    template<detail::vec2_type T>
+    template<concepts::vec2_type T>
     SQUIGGLE_INLINE constexpr void set_zero( T& vector )
     {
         constexpr vec_scalar<T> zero{0};
@@ -20,21 +20,21 @@ namespace sqg
     }
 
     //https://math.stackexchange.com/questions/3158634/whats-the-cross-product-in-2-dimensions
-    template<detail::read_vec2_type V1, detail::read_vec2_type V2>
+    template<concepts::read_vec2_type V1, concepts::read_vec2_type V2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_scalar2<V1,V2> cross( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
         return X(a) * Y(b) - X(b) * Y(a);
     }
 
-    template<detail::read_vec2_type V1, detail::read_vec2_type V2>
+    template<concepts::read_vec2_type V1, concepts::read_vec2_type V2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_scalar2<V1,V2> dot( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
         return X(a) * X(b) + Y(a) * Y(b);
     }
 
-    template<detail::read_vec2_type T>
+    template<concepts::read_vec2_type T>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator-( const T& vector )
     {
         vec_value<T> v;
@@ -43,7 +43,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::read_vec2_type V1, detail::read_vec2_type V2>
+    template<concepts::read_vec2_type V1, concepts::read_vec2_type V2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value2<V1,V2> operator+( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
@@ -54,7 +54,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::read_vec2_type V1, detail::read_vec2_type V2>
+    template<concepts::read_vec2_type V1, concepts::read_vec2_type V2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value2<V1,V2> operator-( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
@@ -65,7 +65,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::read_vec2_type T>
+    template<concepts::read_vec2_type T>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator*( vec_scalar<T> scalar, const T& vector )
     {
         vec_value<T> v;
@@ -74,7 +74,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::vec2_type T>
+    template<concepts::vec2_type T>
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator/( const T& vector, vec_scalar<T> scalar )
     {
         vec_value<T> v;
@@ -83,7 +83,7 @@ namespace sqg
         return v;
     }
 
-    template<detail::read_vec2_type V1, detail::read_vec2_type V2>
+    template<concepts::read_vec2_type V1, concepts::read_vec2_type V2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr bool operator==( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );

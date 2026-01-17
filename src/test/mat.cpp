@@ -2,9 +2,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_get_random_seed.hpp>
 
-static_assert( sqg::detail::mat22_type<sqg::mat22<double>> );
-static_assert( sqg::detail::mat33_type<sqg::mat33<double>> );
-static_assert( sqg::detail::mat44_type<sqg::mat44<double>> );
+static_assert( sqg::concepts::mat22_type<sqg::mat22<double>> );
+static_assert( sqg::concepts::mat33_type<sqg::mat33<double>> );
+static_assert( sqg::concepts::mat44_type<sqg::mat44<double>> );
 
 template<typename T, int rows, int cols>
 void test_assign(std::mt19937& generator )
@@ -224,7 +224,7 @@ TEST_CASE("Orientation View")
 {
     using view = sqg::row_view<sqg::mat33<double>, 0>;
     using type = sqg::orientation_view<sqg::mat44<double>>;
-    //static_assert(sqg::detail::mat33_type<type>, "something");
+    //static_assert(sqg::concepts::mat33_type<type>, "something");
 
     std::mt19937 generator(Catch::getSeed());
 
@@ -240,7 +240,7 @@ TEST_CASE("Orientation View")
     sqg::mat33<double> m1 = sqg::transposed(sqg::mat33<double>{});
     sqg::mat22<double> m2 = sqg::transposed(sqg::mat22<double>{});
 
-    static_assert( sqg::detail::read_mat22_type<sqg::transposed_view<sqg::mat22<double>>> );
+    static_assert( sqg::concepts::read_mat22_type<sqg::transposed_view<sqg::mat22<double>>> );
 
     
 

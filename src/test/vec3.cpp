@@ -9,7 +9,7 @@
 template<typename T>
 struct Vector3
 {
-    T a[3] = { -1, -1 };
+    T a[3] = { -1, -1, -1 };
 };
 
 namespace sqg
@@ -32,13 +32,13 @@ namespace sqg
 TEST_CASE("vec3")
 {
 
-    static_assert( sqg::detail::vec2_type<sqg::vec2<int>>, "Should be vec2" );
-    static_assert( ! sqg::detail::vec3_type<sqg::vec2<int>>, "Shouldn't be vec3" );
-    static_assert( ! sqg::detail::vec4_type<sqg::vec2<int>>, "Shouldn't be vec4" );
-    static_assert( ! sqg::detail::mat22_type<sqg::vec2<int>>, "Shouldn't be mat22" );
-    static_assert( ! sqg::detail::mat33_type<sqg::vec2<int>>, "Shouldn't be mat33" );
-    static_assert( ! sqg::detail::mat44_type<sqg::vec2<int>>, "Shouldn't be mat44" );
-    static_assert( ! sqg::detail::quat_type<sqg::vec2<int>>, "Shouldn't be quat" );
+    static_assert( sqg::concepts::vec2_type<sqg::vec2<int>>, "Should be vec2" );
+    static_assert( ! sqg::concepts::vec3_type<sqg::vec2<int>>, "Shouldn't be vec3" );
+    static_assert( ! sqg::concepts::vec4_type<sqg::vec2<int>>, "Shouldn't be vec4" );
+    static_assert( ! sqg::concepts::mat22_type<sqg::vec2<int>>, "Shouldn't be mat22" );
+    static_assert( ! sqg::concepts::mat33_type<sqg::vec2<int>>, "Shouldn't be mat33" );
+    static_assert( ! sqg::concepts::mat44_type<sqg::vec2<int>>, "Shouldn't be mat44" );
+    static_assert( ! sqg::concepts::quat_type<sqg::vec2<int>>, "Shouldn't be quat" );
 
     SECTION("assign")
     {
@@ -311,7 +311,7 @@ TEST_CASE("Testing")
 
 
     //const auto y = sqg::transposed(sqg::mat22<double>{});
-    //static_assert( sqg::detail::mat_type<decltype(y)> );
+    //static_assert( sqg::concepts::mat_type<decltype(y)> );
     //const double z = sqg::A<0,0>( y );
 
 }

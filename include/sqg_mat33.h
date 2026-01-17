@@ -1,13 +1,11 @@
 #pragma once
 #include "sqg_concepts.h"
 #include "sqg_mat_view.h"
-#include "sqg_struct.h"
 #include "sqg_vec3.h"
-#include <utility>
 #include <cmath>
 namespace sqg
 {
-    template<detail::mat33_type M1, detail::read_mat33_type M2> 
+    template<concepts::mat33_type M1, concepts::read_mat33_type M2> 
     SQUIGGLE_INLINE constexpr void assign( M1& destination, const M2& source )
     {
         static_assert( std::convertible_to<mat_scalar<M1>, mat_scalar<M2>>, "Source Scalar must be convertible to Destination Scalar" );
@@ -24,7 +22,7 @@ namespace sqg
         A22(destination,  A22(source));
     }
     
-    template<detail::mat33_type T> SQUIGGLE_INLINE constexpr void set_identity( T& matrix )
+    template<concepts::mat33_type T> SQUIGGLE_INLINE constexpr void set_identity( T& matrix )
     {
         constexpr typename mat_traits<T>::scalar_type zero{0}; 
         constexpr typename mat_traits<T>::scalar_type one{1}; 
@@ -41,7 +39,7 @@ namespace sqg
         A22(matrix,  one);
     }
 
-    template<detail::read_mat33_type M1, detail::read_mat33_type M2>
+    template<concepts::read_mat33_type M1, concepts::read_mat33_type M2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
         mat_value2<M1,M2> m;
@@ -59,7 +57,7 @@ namespace sqg
         return m;
     }
 
-    template<detail::mat33_type M> SQUIGGLE_INLINE constexpr void transpose(M& matrix)
+    template<concepts::mat33_type M> SQUIGGLE_INLINE constexpr void transpose(M& matrix)
     {
         // xx 01 02
         // 10 xx 12
@@ -70,7 +68,7 @@ namespace sqg
     }
 
     //https://en.wikipedia.org/wiki/Determinant
-    template<detail::read_mat33_type M> 
+    template<concepts::read_mat33_type M> 
     SQUIGGLE_INLINE constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
     {
         const auto a = A00(matrix);
@@ -96,7 +94,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rx(theta)
-    template<detail::mat33_type T> SQUIGGLE_INLINE void set_rotx(T& matrix, typename mat_traits<T>::scalar_type angle)
+    template<concepts::mat33_type T> SQUIGGLE_INLINE void set_rotx(T& matrix, typename mat_traits<T>::scalar_type angle)
     {
         using scalar = mat_traits<T>::scalar_type;
 
@@ -118,7 +116,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Ry(theta)
-    template<detail::mat33_type T> SQUIGGLE_INLINE void set_roty(T& matrix, typename mat_traits<T>::scalar_type angle)
+    template<concepts::mat33_type T> SQUIGGLE_INLINE void set_roty(T& matrix, typename mat_traits<T>::scalar_type angle)
     {
         using scalar = mat_traits<T>::scalar_type;
 
@@ -140,7 +138,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rz(theta)
-    template<detail::mat33_type T> SQUIGGLE_INLINE void set_rotz(T& matrix, typename mat_traits<T>::scalar_type angle)
+    template<concepts::mat33_type T> SQUIGGLE_INLINE void set_rotz(T& matrix, typename mat_traits<T>::scalar_type angle)
     {
         using scalar = mat_traits<T>::scalar_type;
 
@@ -158,6 +156,38 @@ namespace sqg
         A20(matrix,  scalar{0});
         A21(matrix,  scalar{0});
         A22(matrix,  scalar{1});
+    }
+
+    //https://en.wikipedia.org/wiki/Rotation_matrix
+    // Rotation matrix from axis and angle
+    template<concepts::mat33_type M, concepts::read_vec3_type V> SQUIGGLE_INLINE void set_rot( M& matrix, const V& vector, mat_scalar<M> angle )
+    {
+        static_assert( std::same_as<mat_scalar<M>,vec_scalar<V>>, "Scalar type must match for this operation" );
+
+        using scalar = mat_scalar<M>;
+        const scalar cosa = std::cos(angle);
+        const scalar one_cosa = scalar{1} - cosa;
+        const scalar sina = std::sin(angle);
+        // Diagonal
+        A00(matrix,  X(vector) * X(vector) * one_cosa + cosa);
+        A11(matrix,  Y(vector) * Y(vector) * one_cosa + cosa);
+        A22(matrix,  Z(vector) * Z(vector) * one_cosa + cosa);
+
+        // Off Diagonal
+        const scalar xy_one_cosa = X(vector) * Y(vector) * one_cosa;
+        const scalar zsina = Z(vector) * sina;
+        A01(matrix,  xy_one_cosa - zsina);
+        A10(matrix,  xy_one_cosa + zsina);
+
+        const scalar xz_one_cosa = X(vector) * Z(vector) * one_cosa;
+        const scalar ysina = Y(vector) * sina;
+        A02(matrix,  xz_one_cosa + ysina);
+        A20(matrix,  xz_one_cosa - ysina);
+
+        const scalar yz_one_cosa = Y(vector) * Z(vector) * one_cosa;
+        const scalar xsina = X(vector) * sina;
+        A12(matrix,  yz_one_cosa - xsina);
+        A21(matrix,  yz_one_cosa + xsina);
     }
 
     template<typename T> SQUIGGLE_INLINE mat33<T> rotx_mat( T angle )
@@ -178,6 +208,13 @@ namespace sqg
     {
         mat33<T> m;
         set_rotz(m, angle);
+        return m;
+    }
+
+    template<concepts::read_vec3_type V> SQUIGGLE_INLINE mat33<vec_scalar<V>> rot_mat( const V& vector, vec_scalar<V> angle )
+    {
+        mat33<vec_scalar<V>> m;
+        set_rot(m, vector, angle);
         return m;
     }
 }

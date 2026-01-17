@@ -35,7 +35,7 @@ namespace sqg
 }
 
 
-namespace sqg::detail
+namespace sqg::concepts
 {
     template<typename T>
     concept vec_type = requires(T v) {
@@ -278,8 +278,6 @@ namespace sqg::detail
         requires mat_write<T, 3,3> || mat_write_ref<T, 3,3>;
     };
 
-
-
     // 2 dimensions
     template<typename T>
     concept vec2_type = requires() {
@@ -376,27 +374,27 @@ namespace sqg::detail
 
 namespace sqg
 {
-    template<detail::vec_type T>
+    template<concepts::vec_type T>
     using vec_value = vec_traits<T>::type;
 
-    template<detail::vec_type V1, detail::vec_type V2>
+    template<concepts::vec_type V1, concepts::vec_type V2>
     using vec_value2 = deduce_vec_traits<V1,V2>::traits::type;
 
-    template<detail::vec_type T>
+    template<concepts::vec_type T>
     using vec_scalar = vec_traits<T>::scalar_type;
 
-    template<detail::vec_type V1, detail::vec_type V2>
+    template<concepts::vec_type V1, concepts::vec_type V2>
     using vec_scalar2 = deduce_vec_traits<V1,V2>::traits::scalar_type;
 
-    template<detail::mat_type T>
+    template<concepts::mat_type T>
     using mat_value = mat_traits<T>::type;
 
-    template<detail::mat_type M1, detail::mat_type M2>
+    template<concepts::mat_type M1, concepts::mat_type M2>
     using mat_value2 = deduce_mat_traits<M1,M2>::traits::type;
 
-    template<detail::mat_type T>
+    template<concepts::mat_type T>
     using mat_scalar = mat_traits<T>::scalar_type;
 
-    template<detail::mat_type M1, detail::mat_type M2>
+    template<concepts::mat_type M1, concepts::mat_type M2>
     using mat_scalar2 = deduce_mat_traits<M1,M2>::traits::scalar_type;
 }
