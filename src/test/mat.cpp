@@ -229,10 +229,10 @@ TEST_CASE("Orientation View")
     sqg_test::matrix<double, 4,4> M1;
     sqg::mat44<double> M2;
 
-    sqg::mat_value2<decltype(M2), decltype(M1)>;
 
     auto M3 = M2 * M1;
 
+    
 
     //sqg::mat44<double> T = sqg::identity_mat<double, 4>();
     //sqg::orientation(T) = sqg::rotx_mat(1.0);

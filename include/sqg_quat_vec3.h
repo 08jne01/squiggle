@@ -5,7 +5,7 @@
 namespace sqg
 {
     template<detail::quat_type Q, detail::read_vec3_type V>
-    inline constexpr vec_value<V> operator*( const Q& quaternion, const V& vector )
+    SQUIGGLE_INLINE constexpr vec_value<V> operator*( const Q& quaternion, const V& vector )
     {
         static_assert( std::same_as<vec_scalar<Q>,vec_scalar<V>>, "Scalar type must match for this operation" );
 
@@ -22,7 +22,7 @@ namespace sqg
     }
 
     template<detail::quat_type Q, detail::read_vec3_type V>
-    inline constexpr void set_quat( Q& quaternion, const V& vector, typename vec_traits<Q>::scalar_type angle )
+    SQUIGGLE_INLINE constexpr void set_quat( Q& quaternion, const V& vector, typename vec_traits<Q>::scalar_type angle )
     {
         static_assert( std::same_as<vec_scalar<Q>,vec_scalar<V>>, "Scalar type must match for this operation" );
 
@@ -40,7 +40,7 @@ namespace sqg
     }
 
     template<detail::read_vec3_type V>
-    inline constexpr quat<vec_scalar<V>> rot_quat( const V& vector, vec_scalar<V> angle )
+    SQUIGGLE_INLINE constexpr quat<vec_scalar<V>> rot_quat( const V& vector, vec_scalar<V> angle )
     {
         using scalar = vec_scalar<V>;
         quat<scalar> q;

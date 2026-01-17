@@ -5,7 +5,7 @@ namespace sqg
 {
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rotation matrix from axis and angle
-    template<detail::vec3_type T> inline mat33<typename vec_traits<T>::scalar_type> rot_mat( const T& vector, typename vec_traits<T>::scalar_type angle )
+    template<detail::vec3_type T> SQUIGGLE_INLINE mat33<typename vec_traits<T>::scalar_type> rot_mat( const T& vector, typename vec_traits<T>::scalar_type angle )
     {
         using scalar = vec_traits<T>::scalar_type;
         const scalar cosa = std::cos(angle);

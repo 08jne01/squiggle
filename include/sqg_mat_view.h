@@ -31,7 +31,7 @@ namespace sqg
     {
         const M& matrix;
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -47,7 +47,7 @@ namespace sqg
     {
         const M& matrix;
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -65,14 +65,14 @@ namespace sqg
         M& matrix;
 
         template<detail::vec_type V>
-        inline constexpr row_view& operator=( const V& vector )
+        SQUIGGLE_INLINE constexpr row_view& operator=( const V& vector )
         {
             assign(*this, vector);
             return *this;
         }
 
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -88,14 +88,14 @@ namespace sqg
         M& matrix;
 
         template<detail::vec_type V>
-        inline constexpr col_view& operator=( const V& vector )
+        SQUIGGLE_INLINE constexpr col_view& operator=( const V& vector )
         {
             assign(*this, vector);
             return *this;
         }
 
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -113,8 +113,8 @@ namespace sqg
         using view = read_row_view<M,row>;
         static constexpr int n_dims = 2;
 
-        static inline constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
     };
 
     template<detail::mat22_type M, int row>
@@ -125,15 +125,15 @@ namespace sqg
         using view = row_view<M,row>;
         static constexpr int n_dims = 2;
 
-        static inline constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
     };
 
     template<int row, detail::mat22_type M, detail::read_vec2_type V>
-    inline constexpr void assign( row_view<M,row> view, const V& vector )
+    SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
     {
         X(view) = X(vector);
         Y(view) = Y(vector);
@@ -147,9 +147,9 @@ namespace sqg
         using view = read_row_view<M,row>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
     };
 
     template<detail::mat33_type M, int row>
@@ -160,17 +160,17 @@ namespace sqg
         using view = row_view<M,row>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
-        static inline constexpr scalar_type& Z(view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<row,2>(v.matrix); }
     };
 
     template<int row, detail::mat33_type M, detail::read_vec3_type V>
-    inline constexpr void assign( row_view<M,row> view, const V& vector )
+    SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
     {
         X(view) = X(vector);
         Y(view) = Y(vector);
@@ -185,10 +185,10 @@ namespace sqg
         using view = read_row_view<M,row>;
         static constexpr int n_dims = 4;
 
-        static inline constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
-        static inline constexpr scalar_type W(const view& v) { return A<row,3>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return A<row,3>(v.matrix); }
     };
 
     template<detail::mat44_type M, int row>
@@ -199,19 +199,19 @@ namespace sqg
         using view = row_view<M,row>;
         static constexpr int n_dims = 4;
 
-        static inline constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
-        static inline constexpr scalar_type W(const view& v) { return A<row,3>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return A<row,3>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
-        static inline constexpr scalar_type& Z(view& v) { return A<row,2>(v.matrix); }
-        static inline constexpr scalar_type& W(view& v) { return A<row,3>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& W(view& v) { return A<row,3>(v.matrix); }
     };
 
     template<int row, detail::mat44_type M, detail::read_vec4_type V>
-    inline constexpr void assign( row_view<M,row> view, const V& vector )
+    SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
     {
         X(view) = X(vector);
         Y(view) = Y(vector);
@@ -220,13 +220,13 @@ namespace sqg
     }
 
     template<int row_index, detail::mat_type T>
-    inline constexpr read_row_view<T,row_index> row( const T& matrix )
+    SQUIGGLE_INLINE constexpr read_row_view<T,row_index> row( const T& matrix )
     {
         return {matrix};
     }
 
     template<int row_index, detail::mat_type M>
-    inline constexpr row_view<M, row_index> row( M& matrix )
+    SQUIGGLE_INLINE constexpr row_view<M, row_index> row( M& matrix )
     {
         return {matrix};
     }
@@ -239,8 +239,8 @@ namespace sqg
         using view = read_col_view<M,col>;
         static constexpr int n_dims = 2;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
     };
 
     template<detail::mat22_type M, int col>
@@ -251,15 +251,15 @@ namespace sqg
         using view = col_view<M,col>;
         static constexpr int n_dims = 2;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
     };
 
     template<int col, detail::mat22_type M, detail::read_vec2_type V>
-    inline constexpr void assign( col_view<M,col> view, const V& vector )
+    SQUIGGLE_INLINE constexpr void assign( col_view<M,col> view, const V& vector )
     {
         X(view) = X(vector);
         Y(view) = Y(vector);
@@ -273,9 +273,9 @@ namespace sqg
         using view = read_col_view<M,col>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
     };
 
     template<detail::mat33_type M, int col>
@@ -286,17 +286,17 @@ namespace sqg
         using view = col_view<M,col>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
     };
 
     template<int col, detail::mat33_type M, detail::read_vec3_type V>
-    inline constexpr void assign( col_view<M,col> view, const V& vector )
+    SQUIGGLE_INLINE constexpr void assign( col_view<M,col> view, const V& vector )
     {
         X(view) = X(vector);
         Y(view) = Y(vector);
@@ -311,10 +311,10 @@ namespace sqg
         using view = read_col_view<M,col>;
         static constexpr int n_dims = 4;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
-        static inline constexpr scalar_type W(const view& v) { return A<3,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return A<3,col>(v.matrix); }
     };
 
     template<detail::mat44_type M, int col>
@@ -325,19 +325,19 @@ namespace sqg
         using view = col_view<M,col>;
         static constexpr int n_dims = 4;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
-        static inline constexpr scalar_type W(const view& v) { return A<3,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return A<3,col>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
-        static inline constexpr scalar_type& W(view& v) { return A<3,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& W(view& v) { return A<3,col>(v.matrix); }
     };
 
     template<int col, detail::mat44_type M, detail::read_vec4_type V>
-    inline constexpr void assign( col_view<M,col> view, const V& vector )
+    SQUIGGLE_INLINE constexpr void assign( col_view<M,col> view, const V& vector )
     {
         X(view) = X(vector);
         Y(view) = Y(vector);
@@ -346,13 +346,13 @@ namespace sqg
     }
 
     template<int col_index, detail::mat_type T>
-    inline constexpr read_col_view<T,col_index> col( const T& matrix )
+    SQUIGGLE_INLINE constexpr read_col_view<T,col_index> col( const T& matrix )
     {
         return {matrix};
     }
 
     template<int col_index, detail::mat_type M>
-    inline constexpr col_view<M, col_index> col( M& matrix )
+    SQUIGGLE_INLINE constexpr col_view<M, col_index> col( M& matrix )
     {
         return {matrix};
     }
@@ -362,7 +362,7 @@ namespace sqg
     {
         const M& matrix;
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -380,7 +380,7 @@ namespace sqg
         using view = transposed_view<M>;
         static constexpr int n_dims = 2;
 
-        template<int row, int col> static inline constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<col,row>(m.matrix); }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<col,row>(m.matrix); }
     };
 
     template<detail::read_mat33_type M>
@@ -391,7 +391,7 @@ namespace sqg
         using view = transposed_view<M>;
         static constexpr int n_dims = 3;
 
-        template<int row, int col> static inline constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<col,row>(m.matrix); }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<col,row>(m.matrix); }
     };
 
     template<detail::read_mat44_type M>
@@ -402,11 +402,11 @@ namespace sqg
         using view = transposed_view<M>;
         static constexpr int n_dims = 4;
         
-        template<int row, int col> static inline constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<col,row>(m.matrix); }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<col,row>(m.matrix); }
     };
 
     template<detail::mat_type M>
-    inline constexpr transposed_view<M> transposed( const M& matrix )
+    SQUIGGLE_INLINE constexpr transposed_view<M> transposed( const M& matrix )
     {
         return {matrix};
     }
@@ -417,7 +417,7 @@ namespace sqg
         const M& matrix;
 
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -433,14 +433,14 @@ namespace sqg
         M44& matrix;
 
         template<detail::read_mat33_type M33>
-        inline constexpr orientation_view& operator=( const M33& matrix )
+        SQUIGGLE_INLINE constexpr orientation_view& operator=( const M33& matrix )
         {
             assign(*this, matrix);
             return *this;
         }
 
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -458,8 +458,8 @@ namespace sqg
         using view = orientation_view<M>;
         static constexpr int n_dims = 3;
         
-        template<int row, int col> static inline constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<row,col>(m.matrix); }
-        template<int row, int col> static inline constexpr scalar_type& A(view& m) { return mat_traits<M>::template A<row,col>(m.matrix); }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<row,col>(m.matrix); }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type& A(view& m) { return mat_traits<M>::template A<row,col>(m.matrix); }
     };
 
     template<detail::mat44_type M44, detail::read_mat33_type M33>
@@ -486,7 +486,7 @@ namespace sqg
         using view = read_orientation_view<M>;
         static constexpr int n_dims = 3;
         
-        template<int row, int col> static inline constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<row,col>(m.matrix); }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const view& m) { return mat_traits<M>::template A<row,col>(m.matrix); }
     };
 
     template<detail::mat44_type M>
@@ -495,7 +495,7 @@ namespace sqg
         const M& matrix;
 
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -511,14 +511,14 @@ namespace sqg
         M44& matrix;
 
         template<detail::read_vec3_type V>
-        inline constexpr position_view& operator=( const V& vector )
+        SQUIGGLE_INLINE constexpr position_view& operator=( const V& vector )
         {
             assign(*this, matrix);
             return *this;
         }
 
         template<typename R>
-        inline constexpr operator R() const
+        SQUIGGLE_INLINE constexpr operator R() const
         {
             R r;
             assign(r, *this);
@@ -537,9 +537,9 @@ namespace sqg
         using view = read_position_view<M>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
     };
 
     template<detail::mat44_type M>
@@ -551,35 +551,35 @@ namespace sqg
         using view = read_position_view<M>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
 
-        static inline constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static inline constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
-        static inline constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
     };
 
     template<detail::mat44_type M>
-    inline constexpr read_orientation_view<M> orientation( const M& matrix )
+    SQUIGGLE_INLINE constexpr read_orientation_view<M> orientation( const M& matrix )
     {
         return {matrix};
     }
 
     template<detail::mat44_type M>
-    inline constexpr orientation_view<M> orientation( M& matrix )
+    SQUIGGLE_INLINE constexpr orientation_view<M> orientation( M& matrix )
     {
         return {matrix};
     }
 
     template<detail::mat44_type M>
-    inline constexpr read_position_view<M> position( const M& matrix )
+    SQUIGGLE_INLINE constexpr read_position_view<M> position( const M& matrix )
     {
         return {matrix};
     }
 
     template<detail::mat44_type M>
-    inline constexpr position_view<M> position( M& matrix )
+    SQUIGGLE_INLINE constexpr position_view<M> position( M& matrix )
     {
         return {matrix};
     }

@@ -6,7 +6,7 @@
 namespace sqg
 {
     template<detail::vec4_type T>
-    inline constexpr void set_identity( T& quaternion )
+    SQUIGGLE_INLINE constexpr void set_identity( T& quaternion )
     {
         using scalar = vec_traits<T>::scalar_type;
         W(quaternion) = scalar{1};
@@ -16,14 +16,14 @@ namespace sqg
     }
 
     template<std::floating_point T>
-    inline constexpr quat<T> identity_quat()
+    SQUIGGLE_INLINE constexpr quat<T> identity_quat()
     {
         return quat<T>{}; // since sqg::quat is already initialised to identity quaternion
     }
 
     // Returns vector part of quaternion
     template<detail::quat_type T>
-    inline constexpr vec3<vec_scalar<T>> vector_component( const T& quaternion )
+    SQUIGGLE_INLINE constexpr vec3<vec_scalar<T>> vector_component( const T& quaternion )
     {
         vec3<vec_scalar<T>> v;
         X(v) = X(quaternion);
@@ -33,7 +33,7 @@ namespace sqg
     }
 
     template<detail::quat_type T>
-    inline constexpr T conjugate( const T& quaternion )
+    SQUIGGLE_INLINE constexpr T conjugate( const T& quaternion )
     {
         T q;
         W(q) =  W(quaternion);
@@ -44,14 +44,14 @@ namespace sqg
     }
 
     template<detail::quat_type T>
-    inline constexpr T inverse( const T& quaternion )
+    SQUIGGLE_INLINE constexpr T inverse( const T& quaternion )
     {
         return conjucate(quaternion) / mag2(quaternion);
     }
 
     // quaternion multiplication
     template<detail::quat_type T>
-    inline constexpr T operator*( const T& q0, const T& q1 )
+    SQUIGGLE_INLINE constexpr T operator*( const T& q0, const T& q1 )
     {
         // https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/arithmetic/index.htm
         T q;
@@ -69,7 +69,7 @@ namespace sqg
     }
 
     template<std::floating_point T>
-    inline constexpr quat<T> rotx_quat( T angle )
+    SQUIGGLE_INLINE constexpr quat<T> rotx_quat( T angle )
     {   
         quat<T> q;        
         W(q) = std::cos(angle / T{2});
@@ -82,7 +82,7 @@ namespace sqg
     }
 
     template<std::floating_point T>
-    inline constexpr quat<T> roty_quat( T angle )
+    SQUIGGLE_INLINE constexpr quat<T> roty_quat( T angle )
     {   
         quat<T> q;        
         W(q) = std::cos(angle / T{2});
@@ -95,7 +95,7 @@ namespace sqg
     }
 
     template<std::floating_point T>
-    inline constexpr quat<T> rotz_quat( T angle )
+    SQUIGGLE_INLINE constexpr quat<T> rotz_quat( T angle )
     {   
         quat<T> q;        
         W(q) = std::cos(angle / T{2});

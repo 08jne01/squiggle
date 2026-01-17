@@ -1,6 +1,16 @@
 #pragma once
 #include <concepts>
 
+#ifndef SQUIGGLE_INLINE
+#   if defined(_MSC_VER)
+#       define SQUIGGLE_INLINE __forceinline
+#   elif defined(__GNUC__) && __GNUC__>3
+#       define SQUIGGLE_INLINE inline __attribute__ ((always_inline))
+#   else
+#       define SQUIGGLE_INLINE inline
+#   endif
+#endif
+
 namespace sqg
 {
     template<typename T>

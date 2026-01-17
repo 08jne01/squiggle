@@ -6,7 +6,7 @@
 namespace sqg
 {
     template<detail::mat44_type TyLeft, detail::read_mat44_type TyRight> 
-    inline constexpr void assign( TyLeft& destination, const TyRight& source )
+    SQUIGGLE_INLINE constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         A00(destination) = A00(source);
         A01(destination) = A01(source);
@@ -29,7 +29,7 @@ namespace sqg
         A33(destination) = A33(source);
     }
 
-    template<detail::mat44_type T> inline constexpr void set_identity( T& matrix )
+    template<detail::mat44_type T> SQUIGGLE_INLINE constexpr void set_identity( T& matrix )
     {
         constexpr typename mat_traits<T>::scalar_type zero{0}; 
         constexpr typename mat_traits<T>::scalar_type one{1}; 
@@ -55,7 +55,7 @@ namespace sqg
     }
 
     template<detail::read_mat44_type M1, detail::read_mat44_type M2>
-    [[nodiscard]] inline constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
         mat_value2<M1,M2> m;
         A00(m) = sqg::dot(sqg::row<0>(a), sqg::col<0>(b));
@@ -80,7 +80,7 @@ namespace sqg
         return m;
     }
 
-    template<detail::mat44_type M> inline constexpr void transpose(M& matrix)
+    template<detail::mat44_type M> SQUIGGLE_INLINE constexpr void transpose(M& matrix)
     {
         // xx 01 02 03
         // 10 xx 12 13

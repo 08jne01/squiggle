@@ -11,7 +11,7 @@ namespace sqg
         T a[2][2]{};
 
         template<typename R>
-        inline constexpr operator R() const {
+        SQUIGGLE_INLINE constexpr operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -25,7 +25,7 @@ namespace sqg
         T y{};
 
         template<typename R>
-        inline constexpr operator R() const {
+        SQUIGGLE_INLINE constexpr operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -39,7 +39,7 @@ namespace sqg
         T a[3][3]{};
 
         template<typename R>
-        inline constexpr operator R() const {
+        SQUIGGLE_INLINE constexpr operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -54,7 +54,7 @@ namespace sqg
         T z{};
 
         template<typename R>
-        inline constexpr operator R() const {
+        SQUIGGLE_INLINE constexpr operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -68,7 +68,7 @@ namespace sqg
         T a[4][4]{};
 
         template<typename R>
-        inline constexpr explicit operator R() const {
+        SQUIGGLE_INLINE constexpr explicit operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -84,7 +84,7 @@ namespace sqg
         T w{};
 
         template<typename R>
-        inline constexpr explicit operator R() const {
+        SQUIGGLE_INLINE constexpr explicit operator R() const {
             R r;
             assign(r, *this);
             return r;
@@ -112,8 +112,8 @@ namespace sqg
         using type = mat22<T>;
         static constexpr int n_dims = 2;
 
-        template<int row, int col> static inline constexpr scalar_type A(const type& m) { return m.a[row][col]; }
-        template<int row, int col> static inline constexpr scalar_type& A(type& m) { return m.a[row][col]; }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const type& m) { return m.a[row][col]; }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type& A(type& m) { return m.a[row][col]; }
     };
 
     template<typename T>
@@ -123,11 +123,11 @@ namespace sqg
         using type = vec2<T>;
         static constexpr int n_dims = 2;
 
-        static inline constexpr scalar_type X(const type& v) { return v.x; }
-        static inline constexpr scalar_type Y(const type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const type& v) { return v.y; }
 
-        static inline constexpr scalar_type& X(type& v) { return v.x; }
-        static inline constexpr scalar_type& Y(type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(type& v) { return v.y; }
     };
 
     // 3 dimensions
@@ -138,8 +138,8 @@ namespace sqg
         using type = mat33<T>;
         static constexpr int n_dims = 3;
 
-        template<int row, int col> static inline constexpr scalar_type A(const type& m) { return m.a[row][col]; }
-        template<int row, int col> static inline constexpr scalar_type& A(type& m) { return m.a[row][col]; }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const type& m) { return m.a[row][col]; }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type& A(type& m) { return m.a[row][col]; }
     };
 
     template<typename T>
@@ -149,13 +149,13 @@ namespace sqg
         using type = vec3<T>;
         static constexpr int n_dims = 3;
 
-        static inline constexpr scalar_type X(const type& v) { return v.x; }
-        static inline constexpr scalar_type Y(const type& v) { return v.y; }
-        static inline constexpr scalar_type Z(const type& v) { return v.z; }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const type& v) { return v.z; }
 
-        static inline constexpr scalar_type& X(type& v) { return v.x; }
-        static inline constexpr scalar_type& Y(type& v) { return v.y; }
-        static inline constexpr scalar_type& Z(type& v) { return v.z; }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(type& v) { return v.z; }
     };
 
     // 4 dimensions
@@ -166,8 +166,8 @@ namespace sqg
         using type = mat44<T>;
         static constexpr int n_dims = 4;
 
-        template<int row, int col> static inline constexpr scalar_type A(const type& m) { return m.a[row][col]; }
-        template<int row, int col> static inline constexpr scalar_type& A(type& m) { return m.a[row][col]; }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type A(const type& m) { return m.a[row][col]; }
+        template<int row, int col> static SQUIGGLE_INLINE constexpr scalar_type& A(type& m) { return m.a[row][col]; }
     };
 
     template<typename T>
@@ -177,15 +177,15 @@ namespace sqg
         using type = vec4<T>;
         static constexpr int n_dims = 4;
 
-        static inline constexpr scalar_type X(const type& v) { return v.x; }
-        static inline constexpr scalar_type Y(const type& v) { return v.y; }
-        static inline constexpr scalar_type Z(const type& v) { return v.z; }
-        static inline constexpr scalar_type W(const type& v) { return v.w; }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const type& v) { return v.z; }
+        static SQUIGGLE_INLINE constexpr scalar_type W(const type& v) { return v.w; }
 
-        static inline constexpr scalar_type& X(type& v) { return v.x; }
-        static inline constexpr scalar_type& Y(type& v) { return v.y; }
-        static inline constexpr scalar_type& Z(type& v) { return v.z; }
-        static inline constexpr scalar_type& W(type& v) { return v.w; }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(type& v) { return v.z; }
+        static SQUIGGLE_INLINE constexpr scalar_type& W(type& v) { return v.w; }
     };
 
     // quat
@@ -196,15 +196,15 @@ namespace sqg
         using type = quat<T>;
         static constexpr int n_dims = 4;
 
-        static inline constexpr scalar_type W(const type& v) { return v.w; }
-        static inline constexpr scalar_type X(const type& v) { return v.x; }
-        static inline constexpr scalar_type Y(const type& v) { return v.y; }
-        static inline constexpr scalar_type Z(const type& v) { return v.z; }
+        static SQUIGGLE_INLINE constexpr scalar_type W(const type& v) { return v.w; }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const type& v) { return v.z; }
 
-        static inline constexpr scalar_type& W(type& v) { return v.w; }
-        static inline constexpr scalar_type& X(type& v) { return v.x; }
-        static inline constexpr scalar_type& Y(type& v) { return v.y; }
-        static inline constexpr scalar_type& Z(type& v) { return v.z; }
+        static SQUIGGLE_INLINE constexpr scalar_type& W(type& v) { return v.w; }
+        static SQUIGGLE_INLINE constexpr scalar_type& X(type& v) { return v.x; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Y(type& v) { return v.y; }
+        static SQUIGGLE_INLINE constexpr scalar_type& Z(type& v) { return v.z; }
     };
 
     // Setup Deduction for Return Types

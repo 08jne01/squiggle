@@ -9,7 +9,7 @@
 namespace sqg
 {
     template<detail::mat22_type TyLeft, detail::mat22_type TyRight> 
-    inline constexpr void assign( TyLeft& destination, const TyRight& source )
+    SQUIGGLE_INLINE constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         A00(destination) = A00(source);
         A01(destination) = A01(source);
@@ -19,7 +19,7 @@ namespace sqg
     }
 
     template<detail::mat22_type T> 
-    inline constexpr void set_identity(T& matrix)
+    SQUIGGLE_INLINE constexpr void set_identity(T& matrix)
     {
         constexpr typename mat_traits<T>::scalar_type zero{0};
         constexpr typename mat_traits<T>::scalar_type one{1};
@@ -32,7 +32,7 @@ namespace sqg
     }
 
     template<detail::read_mat22_type M1, detail::read_mat22_type M2>
-    [[nodiscard]] inline constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
         mat_value2<M1,M2> m;
         A00(m) = sqg::dot(sqg::row<0>(a), sqg::col<0>(b));
@@ -43,7 +43,7 @@ namespace sqg
     }
 
     template<detail::mat22_type M> 
-    inline constexpr void transpose(M& matrix)
+    SQUIGGLE_INLINE constexpr void transpose(M& matrix)
     {
         // xx 01
         // 10 xx
@@ -52,13 +52,13 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Determinant
     template<detail::mat22_type M> 
-    inline constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
+    SQUIGGLE_INLINE constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
     {
         return A00(matrix) * A11(matrix) - A10(matrix) * A01(matrix);
     }
 
     // 2 dimensional rotation
-    template<typename T> inline mat22<T> rot_mat2( T angle )
+    template<typename T> SQUIGGLE_INLINE mat22<T> rot_mat2( T angle )
     {
         using scalar = T;
         const scalar cosa = std::cos(angle);

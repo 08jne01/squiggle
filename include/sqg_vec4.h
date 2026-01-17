@@ -5,7 +5,7 @@
 namespace sqg
 {
     template<detail::vec4_type V1, detail::read_vec4_type V2>
-    inline constexpr void assign( V1& destination, const V2& source )
+    SQUIGGLE_INLINE constexpr void assign( V1& destination, const V2& source )
     {
         W(destination) = W(source);
         X(destination) = X(source);
@@ -14,7 +14,7 @@ namespace sqg
     }
 
     template<detail::vec4_type T>
-    inline constexpr void set_zero( T& vector )
+    SQUIGGLE_INLINE constexpr void set_zero( T& vector )
     {
         constexpr vec_scalar<T> zero{0};
         W(vector) = zero;
@@ -24,14 +24,14 @@ namespace sqg
     }
 
     template<detail::read_vec4_type V1, detail::read_vec4_type V2>
-    [[nodiscard]] inline constexpr vec_scalar2<V1,V2> dot( const V1& a, const V2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_scalar2<V1,V2> dot( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
         return W(a) * W(b) + X(a) * X(b) + Y(a) * Y(b) + Z(a) * Z(b);
     }
 
     template<detail::read_vec4_type T>
-    [[nodiscard]] inline constexpr vec_value<T> operator-( const T& vector )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator-( const T& vector )
     {
         vec_value<T> v;
         W(v) = -W(vector);
@@ -42,7 +42,7 @@ namespace sqg
     }
 
     template<detail::read_vec4_type V1, detail::read_vec4_type V2>
-    [[nodiscard]] inline constexpr vec_value2<V1,V2> operator+( const V1& a, const V2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value2<V1,V2> operator+( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
@@ -55,7 +55,7 @@ namespace sqg
     }
 
     template<detail::read_vec4_type V1, detail::read_vec4_type V2>
-    [[nodiscard]] inline constexpr vec_value2<V1,V2> operator-( const V1& a, const V2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value2<V1,V2> operator-( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 
@@ -68,7 +68,7 @@ namespace sqg
     }
 
     template<detail::read_vec4_type T>
-    [[nodiscard]] inline constexpr vec_value<T> operator*( vec_scalar<T> scalar, const T& vector )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator*( vec_scalar<T> scalar, const T& vector )
     {
         vec_value<T> v;
         W(v) = scalar * W(vector);
@@ -79,7 +79,7 @@ namespace sqg
     }
 
     template<detail::read_vec4_type T>
-    [[nodiscard]] inline constexpr vec_value<T> operator/( const T& vector, vec_scalar<T> scalar )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator/( const T& vector, vec_scalar<T> scalar )
     {
         vec_value<T> v;
         W(v) = W(vector) / scalar;
@@ -90,7 +90,7 @@ namespace sqg
     }
 
     template<detail::read_vec4_type V1, detail::read_vec4_type V2>
-    [[nodiscard]] inline constexpr bool operator==( const V1& a, const V2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr bool operator==( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
 

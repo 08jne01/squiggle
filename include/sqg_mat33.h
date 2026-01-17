@@ -8,7 +8,7 @@
 namespace sqg
 {
     template<detail::mat33_type TyLeft, detail::read_mat33_type TyRight> 
-    inline constexpr void assign( TyLeft& destination, const TyRight& source )
+    SQUIGGLE_INLINE constexpr void assign( TyLeft& destination, const TyRight& source )
     {
         A00(destination) = A00(source);
         A01(destination) = A01(source);
@@ -23,7 +23,7 @@ namespace sqg
         A22(destination) = A22(source);
     }
     
-    template<detail::mat33_type T> inline constexpr void set_identity( T& matrix )
+    template<detail::mat33_type T> SQUIGGLE_INLINE constexpr void set_identity( T& matrix )
     {
         constexpr typename mat_traits<T>::scalar_type zero{0}; 
         constexpr typename mat_traits<T>::scalar_type one{1}; 
@@ -41,7 +41,7 @@ namespace sqg
     }
 
     template<detail::read_mat33_type M1, detail::read_mat33_type M2>
-    [[nodiscard]] inline constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
         mat_value2<M1,M2> m;
         A00(m) = sqg::dot(sqg::row<0>(a), sqg::col<0>(b));
@@ -58,7 +58,7 @@ namespace sqg
         return m;
     }
 
-    template<detail::mat33_type M> inline constexpr void transpose(M& matrix)
+    template<detail::mat33_type M> SQUIGGLE_INLINE constexpr void transpose(M& matrix)
     {
         // xx 01 02
         // 10 xx 12
@@ -70,7 +70,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Determinant
     template<detail::read_mat33_type M> 
-    inline constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
+    SQUIGGLE_INLINE constexpr mat_traits<M>::scalar_type determinant(const M& matrix)
     {
         const auto a = A00(matrix);
         const auto b = A01(matrix);
@@ -95,7 +95,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rx(theta)
-    template<detail::mat33_type T> inline void set_rotx(T& matrix, typename mat_traits<T>::scalar_type angle)
+    template<detail::mat33_type T> SQUIGGLE_INLINE void set_rotx(T& matrix, typename mat_traits<T>::scalar_type angle)
     {
         using scalar = mat_traits<T>::scalar_type;
 
@@ -117,7 +117,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Ry(theta)
-    template<detail::mat33_type T> inline void set_roty(T& matrix, typename mat_traits<T>::scalar_type angle)
+    template<detail::mat33_type T> SQUIGGLE_INLINE void set_roty(T& matrix, typename mat_traits<T>::scalar_type angle)
     {
         using scalar = mat_traits<T>::scalar_type;
 
@@ -139,7 +139,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rz(theta)
-    template<detail::mat33_type T> inline void set_rotz(T& matrix, typename mat_traits<T>::scalar_type angle)
+    template<detail::mat33_type T> SQUIGGLE_INLINE void set_rotz(T& matrix, typename mat_traits<T>::scalar_type angle)
     {
         using scalar = mat_traits<T>::scalar_type;
 
@@ -159,21 +159,21 @@ namespace sqg
         A22(matrix) = scalar{1};
     }
 
-    template<typename T> inline mat33<T> rotx_mat( T angle )
+    template<typename T> SQUIGGLE_INLINE mat33<T> rotx_mat( T angle )
     {
         mat33<T> m;
         set_rotx(m, angle);
         return m;
     }
 
-    template<typename T> inline mat33<T> roty_mat( T angle )
+    template<typename T> SQUIGGLE_INLINE mat33<T> roty_mat( T angle )
     {
         mat33<T> m;
         set_roty(m, angle);
         return m;
     }
 
-    template<typename T> inline mat33<T> rotz_mat( T angle )
+    template<typename T> SQUIGGLE_INLINE mat33<T> rotz_mat( T angle )
     {
         mat33<T> m;
         set_rotz(m, angle);
