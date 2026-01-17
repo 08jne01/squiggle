@@ -94,21 +94,18 @@ namespace sqg::detail
 
     template<typename T>
     concept vec2_read = requires() {
-        requires vec_type<T>;
         requires vec_x_read<const T>;
         requires vec_y_read<const T>;
     };
 
     template<typename T>
     concept vec2_write = requires() {
-        requires vec_type<T>;
         requires vec_x_write<T>;
         requires vec_y_write<T>;
     };
 
     template<typename T>
     concept vec3_read = requires() {
-        requires vec_type<T>;
         requires vec_x_read<const T>;
         requires vec_y_read<const T>;
         requires vec_z_read<const T>;
@@ -116,7 +113,6 @@ namespace sqg::detail
 
     template<typename T>
     concept vec3_write = requires() {
-        requires vec_type<T>;
         requires vec_x_write<T>;
         requires vec_y_write<T>;
         requires vec_z_write<T>;
@@ -124,7 +120,6 @@ namespace sqg::detail
 
     template<typename T>
     concept vec4_read = requires() {
-        requires vec_type<T>;
         requires vec_x_read<const T>;
         requires vec_y_read<const T>;
         requires vec_z_read<const T>;
@@ -133,7 +128,6 @@ namespace sqg::detail
 
     template<typename T>
     concept vec4_write = requires() {
-        requires vec_type<T>;
         requires vec_x_write<T>;
         requires vec_y_write<T>;
         requires vec_z_write<T>;
