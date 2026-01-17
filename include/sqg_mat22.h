@@ -19,6 +19,18 @@ namespace sqg
     }
 
     template<concepts::mat22_type T> 
+    SQUIGGLE_INLINE constexpr void set_zero(T& matrix)
+    {
+        constexpr typename mat_traits<T>::scalar_type zero{0};
+
+        A00(matrix,  zero);
+        A01(matrix,  zero);
+
+        A10(matrix,  zero);
+        A11(matrix,  zero);
+    }
+
+    template<concepts::mat22_type T> 
     SQUIGGLE_INLINE constexpr void set_identity(T& matrix)
     {
         constexpr typename mat_traits<T>::scalar_type zero{0};
@@ -34,6 +46,8 @@ namespace sqg
     template<concepts::read_mat22_type M1, concepts::read_mat22_type M2>
     [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator*( const M1& a, const M2& b )
     {
+        static_assert( std::same_as<vec_scalar<M1>,vec_scalar<M2>>, "Scalar type must match for this operation" );
+
         mat_value2<M1,M2> m;
         A00(m,  sqg::dot(sqg::row<0>(a), sqg::col<0>(b)));
         A01(m,  sqg::dot(sqg::row<0>(a), sqg::col<1>(b)));
