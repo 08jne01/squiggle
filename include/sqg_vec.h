@@ -62,9 +62,9 @@ namespace sqg
     template<concepts::vec_type T>
     SQUIGGLE_INLINE constexpr void normalize( T& vector )
     {
-        const auto length = mag(vector);
-        assert(length != decltype(length){0});
-        vector /= length;
+        const auto length2 = mag2(vector);
+        assert(length2 != decltype(length2){0});
+        vector *= vec_scalar<T>{1} / std::sqrt(length2);
     }
 
     template<concepts::vec_type T>
