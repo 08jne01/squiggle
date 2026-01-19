@@ -28,7 +28,18 @@ namespace sqg
     [[nodiscard]] SQUIGGLE_INLINE constexpr vec_scalar2<V1,V2> dot( const V1& a, const V2& b )
     {
         static_assert( std::same_as<vec_scalar<V1>,vec_scalar<V2>>, "Scalar type must match for this operation" );
-        return W(a) * W(b) + X(a) * X(b) + Y(a) * Y(b) + Z(a) * Z(b);
+        
+        const vec_scalar<V1> aw = W(a);
+        const vec_scalar<V1> ax = X(a);
+        const vec_scalar<V1> ay = Y(a);
+        const vec_scalar<V1> az = Z(a);
+        
+        const vec_scalar<V2> bw = W(b);
+        const vec_scalar<V2> bx = X(b);
+        const vec_scalar<V2> by = Y(b);
+        const vec_scalar<V2> bz = Z(b);
+        
+        return aw * bw + ax * bx + ay * by + az * bz;
     }
 
     template<concepts::read_vec4_type T>
