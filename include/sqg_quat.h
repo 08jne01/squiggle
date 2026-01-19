@@ -66,8 +66,8 @@ namespace sqg
 
         W(q,  W(q0) * W(q1) - X(q0) * X(q1) - Y(q0) * Y(q1) - Z(q0) * Z(q1));
         X(q,  W(q0) * X(q1) + X(q0) * W(q1) + Y(q0) * Z(q1) - Z(q0) * Y(q1));
-        Y(q,  W(q0) * Y(q1) - X(q0) * Z(q1) + Y(q0) * W(q1) + Z(q0) * X(q1));
-        Z(q,  W(q0) * Z(q1) + X(q0) * Y(q1) - Y(q0) * X(q1) + Z(q0) * W(q1));
+        Y(q,  W(q0) * Y(q1) + Y(q0) * W(q1) + Z(q0) * X(q1) - X(q0) * Z(q1));
+        Z(q,  W(q0) * Z(q1) + Z(q0) * W(q1) + X(q0) * Y(q1) - Y(q0) * X(q1));
         return q;
     }
 
