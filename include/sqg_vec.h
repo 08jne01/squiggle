@@ -95,6 +95,20 @@ namespace sqg
         return vector;
     }
 
+    template<concepts::vec_type V1, concepts::vec_type V2>
+    SQUIGGLE_INLINE constexpr V1& operator+=( V1& a, const V2& b )
+    {
+        a = a + b;
+        return a;
+    }
+
+    template<concepts::vec_type V1, concepts::vec_type V2>
+    SQUIGGLE_INLINE constexpr V1& operator-=( V1& a, const V2& b )
+    {
+        a = a - b;
+        return a;
+    }
+
     template<concepts::vec_type T>
     [[nodiscard]] SQUIGGLE_INLINE constexpr bool operator!=( const T& a, const T& b )
     {
