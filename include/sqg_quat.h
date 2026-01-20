@@ -56,9 +56,9 @@ namespace sqg
     // }
 
     template<concepts::read_quat_type T>
-    SQUIGGLE_INLINE constexpr T conjugate( const T& quaternion )
+    SQUIGGLE_INLINE constexpr vec_value<T> conjugate( const T& quaternion )
     {
-        T q;
+        vec_value<T> q;
         W(q,   W(quaternion));
         X(q,  -X(quaternion));
         Y(q,  -Y(quaternion));
@@ -121,6 +121,8 @@ namespace sqg
         const scalar yw = y * w;
         const scalar yz = y * z;
         const scalar xw = x * w;
+
+        
 
     
         
