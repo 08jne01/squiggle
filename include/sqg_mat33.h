@@ -302,7 +302,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rotation matrix from axis and angle
-    // set matrix to angle/axis rotation, function normalises input axis, so vectors with length != 1 are accepted
+    // set matrix to angle/axis rotation, function DOES NOT normalize axis, normalized vector is EXPECTED
     template<concepts::mat33_type M, concepts::read_vec3_type V> SQUIGGLE_INLINE void set_rot( M& matrix, const V& axis, mat_scalar<M> angle )
     {
         static_assert( std::same_as<mat_scalar<M>,vec_scalar<V>>, "Scalar type must match for this operation" );
@@ -312,31 +312,34 @@ namespace sqg
         const scalar one_cosa = scalar{1} - cosa;
         const scalar sina = std::sin(angle);
 
-        sqg::vec3<scalar> v;
-        assign(v, axis);
-        normalize(v);
-
-        const auto x = v.x;
-        const auto y = v.y;
-        const auto z = v.z;
+        const auto x = X(axis);
+        const auto y = Y(axis);
+        const auto z = Z(axis);
 
         // Diagonal
-        A00(matrix,  x * x * one_cosa + cosa);
-        A11(matrix,  y * y * one_cosa + cosa);
-        A22(matrix,  z * z * one_cosa + cosa);
+        // ux^2 * ( 1 - cosa ) + cosa
+        // ux^2 - ux^2 cosa + cosa
+        // ux^2 + (1 - ux^2) cosa 
+        const scalar xx = x*x;
+        const scalar yy = y*y;
+        const scalar zz = z*z;
+
+        A00(matrix,  xx + (scalar{1} - xx) * cosa);
+        A11(matrix,  yy + (scalar{1} - yy) * cosa);
+        A22(matrix,  zz + (scalar{1} - zz) * cosa);
 
         // Off Diagonal
-        const scalar xy_one_cosa = x * y * one_cosa;
+        const scalar xy_one_cosa = (x * y) * one_cosa;
         const scalar zsina = z * sina;
         A01(matrix,  xy_one_cosa - zsina);
         A10(matrix,  xy_one_cosa + zsina);
 
-        const scalar xz_one_cosa = x * z * one_cosa;
+        const scalar xz_one_cosa = (x * z) * one_cosa;
         const scalar ysina = y * sina;
         A02(matrix,  xz_one_cosa + ysina);
         A20(matrix,  xz_one_cosa - ysina);
 
-        const scalar yz_one_cosa = y * z * one_cosa;
+        const scalar yz_one_cosa = (y * z) * one_cosa;
         const scalar xsina = x * sina;
         A12(matrix,  yz_one_cosa - xsina);
         A21(matrix,  yz_one_cosa + xsina);

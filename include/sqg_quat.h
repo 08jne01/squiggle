@@ -174,9 +174,9 @@ namespace sqg
         Z(quaternion,  sina2);
     }
 
-    // set quaternion to angle/axis rotation, function normalises input axis, so vectors with length != 1 are accepted
+    // set quaternion to angle/axis rotation, function DOES NOT normalize axis, normalized vector is EXPECTED
     template<concepts::quat_type Q, concepts::read_vec3_type V>
-    SQUIGGLE_INLINE constexpr void set_rot( Q& quaternion,  const V& vector, vec_scalar<Q> angle )
+    SQUIGGLE_INLINE constexpr void set_rot( Q& quaternion,  const V& axis, vec_scalar<Q> angle )
     {
         static_assert( std::same_as<vec_scalar<Q>,vec_scalar<V>>, "Scalar type must match for this operation" );
 
@@ -184,18 +184,16 @@ namespace sqg
         using scalar = vec_scalar<Q>;
         angle /= scalar{2};
 
-        sqg::vec3<scalar> v;
-        assign(v, vector);
+        const scalar x = X(axis);
+        const scalar y = Y(axis);
+        const scalar z = Z(axis);
 
         W(quaternion,   std::cos(angle));
-
-        // axis must be normalised
-        sqg::normalize(v);
         
         const auto sina2 = std::sin(angle);
-        X(quaternion,   v.x * sina2);
-        Y(quaternion,   v.y * sina2);
-        Z(quaternion,   v.z * sina2);
+        X(quaternion,   x * sina2);
+        Y(quaternion,   y * sina2);
+        Z(quaternion,   z * sina2);
     }
 
     template<std::floating_point T>

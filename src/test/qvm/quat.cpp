@@ -229,11 +229,15 @@ void test_vec(std::mt19937& generator)
         });
     }
 
-    SECTION("set_rotz")
+    SECTION("set_rot")
     {
         test_quat_operation2<T>(generator, [](quat<T> q0, quat<T> q1, qquat<T> qq0, qquat<T> qq1){
             boost::qvm::set_rot(qq0, boost::qvm::V(qq1), boost::qvm::S(qq1));
-            sqg::set_rot(q0, sqg::V(q1), sqg::S(q1));            
+            
+            // qvm has inconsistant behaviour between mat and quat
+            // qvm rot normalises the axis and mat does not
+            // so we will never normalise to give user preference if they have a normalised vector already
+            sqg::set_rot(q0, sqg::normalized(sqg::V(q1)), sqg::S(q1));            
             REQUIRE(boost::qvm::mag_sqr(error(q0,qq0)) == T{0});
         });
     }
