@@ -181,6 +181,9 @@ namespace sqg_test
 namespace sqg
 {
     template<typename T>
+    concept scalar = std::integral<T> || std::floating_point<T>;
+
+    template<scalar T>
     struct vec_traits<sqg_test::vector<T, 2>>
     {
         using scalar_type = T;
@@ -194,7 +197,7 @@ namespace sqg
         using sqg_vector = sqg::vec2<T>;
     };
 
-    template<typename T>
+    template<scalar T>
     struct vec_traits<sqg_test::vector<T, 3>>
     {
         using scalar_type = T;
@@ -210,7 +213,7 @@ namespace sqg
         using sqg_vector = sqg::vec3<T>;
     };
 
-    template<typename T>
+    template<scalar T>
     struct vec_traits<sqg_test::vector<T, 4>>
     {
         using scalar_type = T;
@@ -228,7 +231,7 @@ namespace sqg
         using sqg_vector = sqg::vec4<T>;
     };
 
-    template<typename T>
+    template<scalar T>
     struct mat_traits<sqg_test::matrix<T,2,2>>
     {
         using scalar_type = T;
@@ -240,7 +243,7 @@ namespace sqg
         using sqg_matrix = sqg::mat22<T>;
     };
 
-    template<typename T>
+    template<scalar T>
     struct mat_traits<sqg_test::matrix<T,3,3>>
     {
         using scalar_type = T;
@@ -252,7 +255,7 @@ namespace sqg
         using sqg_matrix = sqg::mat33<T>;
     };
 
-    template<typename T>
+    template<scalar T>
     struct mat_traits<sqg_test::matrix<T,4,4>>
     {
         using scalar_type = T;

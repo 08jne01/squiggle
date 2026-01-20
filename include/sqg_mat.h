@@ -20,5 +20,11 @@ namespace sqg
         return ! ( a == b );
     } 
 
+    template<concepts::mat_type M>
+    [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value<M> operator*( const M& matrix, mat_scalar<M> scalar )
+    {
+        return scalar * matrix;
+    }
+
     
 }

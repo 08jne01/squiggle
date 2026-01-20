@@ -68,9 +68,9 @@ namespace sqg
 
     // full inverse, if you quaternion is normalised you can use conjugate for the same result but cheaper
     template<concepts::read_quat_type T>
-    SQUIGGLE_INLINE constexpr T inverse( const T& quaternion )
+    SQUIGGLE_INLINE constexpr vec_value<T> inverse( const T& quaternion )
     {
-        return conjucate(quaternion) / mag2(quaternion);
+        return conjugate(quaternion) / mag2(quaternion);
     }
 
     // quaternion multiplication
@@ -174,6 +174,7 @@ namespace sqg
         Z(quaternion,  sina2);
     }
 
+    // set quaternion to angle/axis rotation, function normalises input axis, so vectors with length != 1 are accepted
     template<concepts::quat_type Q, concepts::read_vec3_type V>
     SQUIGGLE_INLINE constexpr void set_rot( Q& quaternion,  const V& vector, vec_scalar<Q> angle )
     {
@@ -201,7 +202,7 @@ namespace sqg
     SQUIGGLE_INLINE constexpr quat<T> rotx_quat( T angle )
     {   
         quat<T> q;        
-        set_rotx(q);
+        set_rotx(q,angle);
         return q;
     }
 
@@ -209,7 +210,7 @@ namespace sqg
     SQUIGGLE_INLINE constexpr quat<T> roty_quat( T angle )
     {   
         quat<T> q;       
-        set_roty(q);
+        set_roty(q,angle);
         return q;
     }
 
@@ -217,7 +218,7 @@ namespace sqg
     SQUIGGLE_INLINE constexpr quat<T> rotz_quat( T angle )
     {   
         quat<T> q;  
-        set_rotz(q); 
+        set_rotz(q,angle); 
         return q;
     }
 

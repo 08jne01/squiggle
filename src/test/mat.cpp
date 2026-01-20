@@ -231,6 +231,9 @@ TEST_CASE("Orientation View")
     sqg_test::matrix<double, 4,4> M1;
     sqg::mat44<double> M2;
 
+    // constexpr int x = sqg::vec_traits<sqg_test::matrix<double, 4,4>>::n_dims;
+    // using scalar = sqg::vec_traits<sqg_test::matrix<double, 4,4>>::scalar_type;
+    // static_assert( sqg::concepts::read_vec4_type<> );
 
     auto M3 = M2 * M1;
 

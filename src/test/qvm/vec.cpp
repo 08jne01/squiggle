@@ -3,6 +3,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_get_random_seed.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <catch2/benchmark/catch_benchmark.hpp>
 #include "../test.h"
 #include <concepts>
 #include <iostream>
@@ -564,9 +565,29 @@ TEST_CASE("qvm vec3")
 
 TEST_CASE("qvm vec4 + quat")
 {
-    std::mt19937 generator{ 1949253684 };
+    std::mt19937 generator{ Catch::getSeed() };
     SECTION("double") { test_vec<double, 4>(generator); }
     SECTION("float") { test_vec<float, 4>(generator); }
     SECTION("short") { test_vec<short, 4>(generator); }
     SECTION("int") { test_vec<int, 4>(generator); }
 }
+
+// TEST_CASE("qvm vec4")
+// {
+//     std::mt19937 generator{ Catch::getSeed() };
+
+//     std::vector<vec<double,4>> vecs(1000);
+//     qvec<double,4> dummy;
+//     for ( auto& v : vecs ) 
+//         random_vec_real(generator,v,dummy);
+
+//     vec<double,4> vec;
+//     BENCHMARK("Section")
+//     {
+//         for ( const auto& v : vecs )
+//             vec += -v;
+
+//         return vec;            
+//     };
+    
+// }

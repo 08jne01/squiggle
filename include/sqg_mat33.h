@@ -2,6 +2,7 @@
 #include "sqg_concepts.h"
 #include "sqg_mat_view.h"
 #include "sqg_vec3.h"
+#include "sqg_mat22.h"
 #include <cmath>
 namespace sqg
 {
@@ -110,8 +111,81 @@ namespace sqg
             a * f * h;
     }
 
+    // This is horrifically slow, mainly just for constexpr operation
+    // If you want the inverse of a rotation for an orthonormal matrix transpose is equivalent.
+    template<concepts::read_mat33_type M>
+    [[nodiscard]] SQUIGGLE_INLINE constexpr mat_value<M> inverse(const M& matrix)
+    { //https://mathworld.wolfram.com/MatrixInverse.html
+
+        mat_value<M> m;
+
+        using scalar = mat_scalar<M>;
+
+        const scalar a11 = A00(matrix);
+        const scalar a12 = A01(matrix);
+        const scalar a13 = A02(matrix);
+
+        const scalar a21 = A10(matrix);
+        const scalar a22 = A11(matrix);
+        const scalar a23 = A12(matrix);
+
+        const scalar a31 = A20(matrix);
+        const scalar a32 = A21(matrix);
+        const scalar a33 = A22(matrix);
+
+
+        A00(m, determinant(sqg::mat22<mat_scalar<M>>{{
+            { a22, a23 },
+            { a32, a33 }
+        }}));
+
+        A01(m, determinant(sqg::mat22<mat_scalar<M>>{{
+            { a13, a12 },
+            { a33, a32 }
+        }}));
+
+        A02(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a12, a13 },
+            { a22, a23 }
+        }}));
+
+        A10(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a23, a21 },
+            { a33, a31 }
+        }}));
+
+        A11(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a11, a13 },
+            { a31, a33 }
+        }}));
+
+        A12(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a13, a11 },
+            { a23, a21 }
+        }}));
+
+        A20(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a21, a22 },
+            { a31, a32 }
+        }}));
+
+        A21(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a12, a11 },
+            { a32, a31 }
+        }}));
+
+        A22(m,determinant(sqg::mat22<mat_scalar<M>>{{
+            { a11, a12 },
+            { a21, a22 }
+        }}));
+
+        const scalar det = determinant(matrix);
+        assert(det != scalar{0});
+        return m * ( scalar{1} / det );
+    }
+
     template<concepts::read_mat33_type M> 
-    SQUIGGLE_INLINE constexpr mat_value<M> operator*( const M& matrix )
+    SQUIGGLE_INLINE constexpr mat_value<M> operator-( const M& matrix )
     {
         mat_value<M> m;
         row<0>(m) = -row<0>(matrix);

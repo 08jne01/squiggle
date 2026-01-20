@@ -72,7 +72,7 @@ namespace sqg
     }
 
     template<concepts::read_mat22_type M> 
-    SQUIGGLE_INLINE constexpr mat_value<M> operator*( const M& matrix )
+    SQUIGGLE_INLINE constexpr mat_value<M> operator-( const M& matrix )
     {
         mat_value<M> m;
         row<0>(m) = -row<0>(matrix);

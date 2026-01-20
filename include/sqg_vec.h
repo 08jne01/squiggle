@@ -68,28 +68,28 @@ namespace sqg
     }
 
     template<concepts::vec_type T>
-    SQUIGGLE_INLINE constexpr T normalized( const T& vector )
+    SQUIGGLE_INLINE constexpr vec_value<T> normalized( const T& vector )
     {
-        T v = vector;
+        vec_value<T> v = vector;
         normalize(v);
         return v;
     }
 
     template<concepts::vec_type T>
-    [[nodiscard]] SQUIGGLE_INLINE constexpr T operator*( const T& vector, typename vec_traits<T>::scalar_type scalar )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr vec_value<T> operator*( const T& vector, vec_scalar<T> scalar )
     {
         return scalar * vector;
     }
 
     template<concepts::vec_type T>
-    SQUIGGLE_INLINE constexpr T& operator*=( T& vector, typename vec_traits<T>::scalar_type scalar )
+    SQUIGGLE_INLINE constexpr T& operator*=( T& vector, vec_scalar<T> scalar )
     {
         vector = scalar * vector;
         return vector;
     }
 
     template<concepts::vec_type T>
-    SQUIGGLE_INLINE constexpr T& operator/=( T& vector, typename vec_traits<T>::scalar_type scalar )
+    SQUIGGLE_INLINE constexpr T& operator/=( T& vector, vec_scalar<T> scalar )
     {
         vector = vector / scalar;
         return vector;

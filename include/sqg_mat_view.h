@@ -135,8 +135,8 @@ namespace sqg
     template<int row, concepts::mat22_type M, concepts::read_vec2_type V>
     SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
     {
-        X(view) = X(vector);
-        Y(view) = Y(vector);
+        X(view,   X(vector));
+        Y(view,   Y(vector));
     }
 
     template<concepts::read_mat33_type M, int row>
@@ -164,18 +164,18 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<row,2>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<row,0>(v.matrix, s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<row,1>(v.matrix, s); }
+        static SQUIGGLE_INLINE constexpr void Z(view& v, scalar_type s) { return A<row,2>(v.matrix, s); }
     };
 
-    template<int row, concepts::mat33_type M, concepts::read_vec3_type V>
-    SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
-    {
-        X(view) = X(vector);
-        Y(view) = Y(vector);
-        Z(view) = Z(vector);
-    }
+    // template<int row, concepts::mat33_type M, concepts::read_vec3_type V>
+    // SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
+    // {
+    //     X(view,   X(vector));
+    //     Y(view,   Y(vector));
+    //     Z(view,   Z(vector));
+    // }
 
     template<concepts::read_mat44_type M, int row>
     struct vec_traits<read_row_view<M,row>>
@@ -213,20 +213,20 @@ namespace sqg
     template<int row, concepts::mat44_type M, concepts::read_vec4_type V>
     SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
     {
-        X(view) = X(vector);
-        Y(view) = Y(vector);
-        Z(view) = Z(vector);
-        W(view) = W(vector);
-    }
-
-    template<int row_index, concepts::mat_type T>
-    SQUIGGLE_INLINE constexpr read_row_view<T,row_index> row( const T& matrix )
-    {
-        return {matrix};
+        X(view,   X(vector));
+        Y(view,   Y(vector));
+        Z(view,   Z(vector));
+        W(view,   W(vector));
     }
 
     template<int row_index, concepts::mat_type M>
     SQUIGGLE_INLINE constexpr row_view<M, row_index> row( M& matrix )
+    {
+        return {matrix};
+    }
+
+    template<int row_index, concepts::mat_type T>
+    SQUIGGLE_INLINE constexpr read_row_view<T,row_index> row( const T& matrix )
     {
         return {matrix};
     }
@@ -261,8 +261,8 @@ namespace sqg
     template<int col, concepts::mat22_type M, concepts::read_vec2_type V>
     SQUIGGLE_INLINE constexpr void assign( col_view<M,col> view, const V& vector )
     {
-        X(view) = X(vector);
-        Y(view) = Y(vector);
+        X(view,  X(vector));
+        Y(view,  Y(vector));
     }
 
     template<concepts::read_mat33_type M, int col>
@@ -298,9 +298,9 @@ namespace sqg
     template<int col, concepts::mat33_type M, concepts::read_vec3_type V>
     SQUIGGLE_INLINE constexpr void assign( col_view<M,col> view, const V& vector )
     {
-        X(view) = X(vector);
-        Y(view) = Y(vector);
-        Z(view) = Z(vector);
+        X(view,   X(vector));
+        Y(view,   Y(vector));
+        Z(view,   Z(vector));
     }
 
     template<concepts::read_mat44_type M, int col>
@@ -339,10 +339,10 @@ namespace sqg
     template<int col, concepts::mat44_type M, concepts::read_vec4_type V>
     SQUIGGLE_INLINE constexpr void assign( col_view<M,col> view, const V& vector )
     {
-        X(view) = X(vector);
-        Y(view) = Y(vector);
-        Z(view) = Z(vector);
-        W(view) = W(vector);
+        X(view,    X(vector));
+        Y(view,    Y(vector));
+        Z(view,    Z(vector));
+        W(view,    W(vector));
     }
 
     template<int col_index, concepts::mat_type T>
