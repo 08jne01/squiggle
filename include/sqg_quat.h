@@ -1,10 +1,27 @@
 #pragma once
 #include "sqg_struct.h"
 #include "sqg_concepts.h"
-#include "sqg_vec3.h"
+#include "sqg_vec.h"
 
 namespace sqg
 {
+    template<concepts::read_quat_type T>
+    SQUIGGLE_INLINE constexpr vec3<vec_scalar<T>> V( const T& quaternion )
+    {
+        vec3<vec_scalar<T>> v;
+        X(v,  X(quaternion));
+        Y(v,  Y(quaternion));
+        Z(v,  Z(quaternion));
+        return v;
+    }
+
+    template<concepts::read_quat_type T>
+    SQUIGGLE_INLINE constexpr vec_scalar<T> S( const T& quaternion )
+    {
+        return W(quaternion);
+    }
+
+
     template<concepts::vec4_type T>
     SQUIGGLE_INLINE constexpr void set_identity( T& quaternion )
     {
@@ -21,22 +38,22 @@ namespace sqg
         return quat<T>{}; // since sqg::quat is already initialised to identity quaternion
     }
 
-    template<concepts::vec3_type V, concepts::read_quat_type Q>
-    SQUIGGLE_INLINE constexpr void vector_component( V& vector, const Q& quaternion )
-    {
-        X(vector,  X(quaternion));
-        Y(vector,  Y(quaternion));
-        Z(vector,  Z(quaternion));
-    }
+    // template<concepts::vec3_type V, concepts::read_quat_type Q>
+    // SQUIGGLE_INLINE constexpr void vector_component( V& vector, const Q& quaternion )
+    // {
+    //     X(vector,  X(quaternion));
+    //     Y(vector,  Y(quaternion));
+    //     Z(vector,  Z(quaternion));
+    // }
 
-    // Returns vector part of quaternion
-    template<concepts::read_quat_type T>
-    SQUIGGLE_INLINE constexpr vec3<vec_scalar<T>> vector_component( const T& quaternion )
-    {
-        vec3<vec_scalar<T>> v;
-        extract_vector(v, quaternion);
-        return v;
-    }
+    // // Returns vector part of quaternion
+    // template<concepts::read_quat_type T>
+    // SQUIGGLE_INLINE constexpr vec3<vec_scalar<T>> vector_component( const T& quaternion )
+    // {
+    //     vec3<vec_scalar<T>> v;
+    //     vector_component(v, quaternion);
+    //     return v;
+    // }
 
     template<concepts::read_quat_type T>
     SQUIGGLE_INLINE constexpr T conjugate( const T& quaternion )
@@ -49,6 +66,7 @@ namespace sqg
         return q;
     }
 
+    // full inverse, if you quaternion is normalised you can use conjugate for the same result but cheaper
     template<concepts::read_quat_type T>
     SQUIGGLE_INLINE constexpr T inverse( const T& quaternion )
     {
@@ -78,14 +96,43 @@ namespace sqg
 
         //https://math.stackexchange.com/questions/4037487/quaternion-sandwich-simplification-gives-me-a-term-too-many
         // (c^2 - b^2)v + 2(v . b)b + 2c(b x v)
+        // but also
+        // https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/transforms/index.htm
+        // so the matrix used in the above link doesn't perform the simplification qvm does
+        // if you assume ww + xx + yy + zz = 1 then you get a slightly cheaper result
+        // which is also shown here https://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToMatrix/index.htm
+        // this makes sense too because the matrix formed in the former is not orthonormal if the quaternion is not normalised
+
         using scalar = vec_scalar<Q>;
-        const auto c = W(quaternion);
-        const auto b = vector_component(quaternion); 
+
+        const scalar w = W(quaternion);
+        const scalar x = X(quaternion);
+        const scalar y = Y(quaternion);
+        const scalar z = Z(quaternion);
         
-        return 
-            (c * c - mag2(b)) * vector + 
-            scalar{2} * dot(vector, b) * b + 
-            scalar{2} * c * cross(b, vector);
+        const scalar ww = w * w;
+        const scalar xx = x * x;
+        const scalar yy = y * y;
+        const scalar zz = z * z;
+
+        const scalar xy = x * y;
+        const scalar zw = z * w;
+        const scalar xz = x * z;
+        const scalar yw = y * w;
+        const scalar yz = y * z;
+        const scalar xw = x * w;
+
+    
+        
+        const scalar vx = X(vector);
+        const scalar vy = Y(vector);
+        const scalar vz = Z(vector);
+        
+        vec_value<V> v;
+        X(v,    vx + scalar{2} * ((-yy - zz) * vx + ( xy - zw) * vy + ( xz + yw) * vz));
+        Y(v,    vy + scalar{2} * (( xy + zw) * vx + (-xx - zz) * vy + ( yz - xw) * vz));
+        Z(v,    vz + scalar{2} * (( xz - yw) * vx + ( yz + xw) * vy + (-xx - yy) * vz));
+        return v;
     }
 
     template<concepts::quat_type Q>
@@ -126,21 +173,26 @@ namespace sqg
     }
 
     template<concepts::quat_type Q, concepts::read_vec3_type V>
-    SQUIGGLE_INLINE constexpr void set_rot( Q& quaternion, const V& vector, typename vec_traits<Q>::scalar_type angle )
+    SQUIGGLE_INLINE constexpr void set_rot( Q& quaternion,  const V& vector, vec_scalar<Q> angle )
     {
         static_assert( std::same_as<vec_scalar<Q>,vec_scalar<V>>, "Scalar type must match for this operation" );
 
         // https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/notations/scalarAndVector/index.htm
-        using scalar = typename vec_traits<Q>::scalar_type;
-        W(quaternion) = std::cos(angle / scalar{2});
-    
-        assert( std::abs(mag(vector) - scalar{1}) < scalar{1.0e-6} );
+        using scalar = vec_scalar<Q>;
+        angle /= scalar{2};
 
-        // axis should be normalised
-        const auto sina2 = std::sin(angle / scalar{2});
-        X(quaternion) = X(vector) * sina2;
-        Y(quaternion) = Y(vector) * sina2;
-        Z(quaternion) = Z(vector) * sina2;
+        sqg::vec3<scalar> v;
+        assign(v, vector);
+
+        W(quaternion,   std::cos(angle));
+
+        // axis must be normalised
+        sqg::normalize(v);
+        
+        const auto sina2 = std::sin(angle);
+        X(quaternion,   v.x * sina2);
+        Y(quaternion,   v.y * sina2);
+        Z(quaternion,   v.z * sina2);
     }
 
     template<std::floating_point T>

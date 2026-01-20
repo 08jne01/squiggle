@@ -11,7 +11,7 @@ add_library( squiggle INTERFACE )
 target_include_directories( squiggle INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 
 
-set(SQUIGGLE_TEST ON CACHE BOOL "Build Unit Tests")
+set(SQUIGGLE_TEST ON CACHE BOOL "Build Squiggle Unit Tests")
 
 if ( SQUIGGLE_TEST )
     if ( NOT TARGET Catch2::Catch2WithMain )
@@ -24,12 +24,25 @@ if ( SQUIGGLE_TEST )
         )
 
         FetchContent_MakeAvailable(Catch2)
-        MESSAGE(INFO " [ut-units] Fetching Catch2")
+        MESSAGE(INFO " [squiggle] Fetching Catch2")
     endif()
 
-    MESSAGE(INFO " [ut-units] Building Unit Tests")
+    if ( NOT TARGET boost_qvm )
+        include(FetchContent)
+        FetchContent_Declare(
+            boost_qvm
+            GIT_REPOSITORY "https://github.com/boostorg/qvm.git"
+            GIT_TAG        2e574dd16f812b99423ad20fa72b3738ff053390
+        )
+
+        FetchContent_MakeAvailable(boost_qvm)
+        MESSAGE(INFO " [squiggle] Fetching Boost QVM")
+        #
+    endif()
+
+    MESSAGE(INFO " [squiggle] Will build Unit Tests")
 
     add_executable(squiggle_test ${source_list})
     set_property(TARGET squiggle_test PROPERTY CXX_STANDARD 23)
-    target_link_libraries(squiggle_test PRIVATE Catch2::Catch2WithMain squiggle)
+    target_link_libraries(squiggle_test PRIVATE Catch2::Catch2WithMain boost_qvm squiggle)
 endif()
