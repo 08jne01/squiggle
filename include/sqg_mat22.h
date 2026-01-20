@@ -71,6 +71,51 @@ namespace sqg
         return A00(matrix) * A11(matrix) - A10(matrix) * A01(matrix);
     }
 
+    template<concepts::read_mat22_type M> 
+    SQUIGGLE_INLINE constexpr mat_value<M> operator*( const M& matrix )
+    {
+        mat_value<M> m;
+        row<0>(m) = -row<0>(matrix);
+        row<1>(m) = -row<1>(matrix);
+        return m;
+    }
+
+    template<concepts::read_mat22_type M1, concepts::read_mat22_type M2> 
+    SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator+( const M1& a, const M2& b )
+    {
+        mat_value2<M1,M2> m;
+        row<0>(m) = row<0>(a) + row<0>(b);
+        row<1>(m) = row<1>(a) + row<1>(b);
+        return m;
+    }
+
+    template<concepts::read_mat22_type M1, concepts::read_mat22_type M2> 
+    SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator-( const M1& a, const M2& b )
+    {
+        mat_value2<M1,M2> m;
+        row<0>(m) = row<0>(a) - row<0>(b);
+        row<1>(m) = row<1>(a) - row<1>(b);
+        return m;
+    }
+
+    template<concepts::read_mat22_type M> 
+    SQUIGGLE_INLINE constexpr mat_value<M> operator*( mat_scalar<M> scalar, const M& matrix )
+    {
+        mat_value<M> m;
+        row<0>(m) = row<0>(matrix) * scalar;
+        row<1>(m) = row<1>(matrix) * scalar;
+        return m;
+    }
+
+    template<concepts::read_mat22_type M> 
+    SQUIGGLE_INLINE constexpr mat_value<M> operator/( const M& matrix, mat_scalar<M> scalar )
+    {
+        mat_value<M> m;
+        row<0>(m) = row<0>(matrix) / scalar;
+        row<1>(m) = row<1>(matrix) / scalar;
+        return m;
+    }
+
     template<concepts::mat22_type M> SQUIGGLE_INLINE void set_rot2( M& matrix, mat_scalar<M> angle )
     {
         using scalar = mat_scalar<M>;

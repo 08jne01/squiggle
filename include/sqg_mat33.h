@@ -110,6 +110,56 @@ namespace sqg
             a * f * h;
     }
 
+    template<concepts::read_mat33_type M> 
+    SQUIGGLE_INLINE constexpr mat_value<M> operator*( const M& matrix )
+    {
+        mat_value<M> m;
+        row<0>(m) = -row<0>(matrix);
+        row<1>(m) = -row<1>(matrix);
+        row<2>(m) = -row<2>(matrix);
+        return m;
+    }
+
+    template<concepts::read_mat33_type M1, concepts::read_mat33_type M2> 
+    SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator+( const M1& a, const M2& b )
+    {
+        mat_value2<M1,M2> m;
+        row<0>(m) = row<0>(a) + row<0>(b);
+        row<1>(m) = row<1>(a) + row<1>(b);
+        row<2>(m) = row<2>(a) + row<2>(b);
+        return m;
+    }
+
+    template<concepts::read_mat33_type M1, concepts::read_mat33_type M2> 
+    SQUIGGLE_INLINE constexpr mat_value2<M1,M2> operator-( const M1& a, const M2& b )
+    {
+        mat_value2<M1,M2> m;
+        row<0>(m) = row<0>(a) - row<0>(b);
+        row<1>(m) = row<1>(a) - row<1>(b);
+        row<2>(m) = row<2>(a) - row<2>(b);
+        return m;
+    }
+
+    template<concepts::read_mat33_type M> 
+    SQUIGGLE_INLINE constexpr mat_value<M> operator*( mat_scalar<M> scalar, const M& matrix )
+    {
+        mat_value<M> m;
+        row<0>(m) = row<0>(matrix) * scalar;
+        row<1>(m) = row<1>(matrix) * scalar;
+        row<2>(m) = row<2>(matrix) * scalar;
+        return m;
+    }
+
+    template<concepts::read_mat33_type M> 
+    SQUIGGLE_INLINE constexpr mat_value<M> operator/( const M& matrix, mat_scalar<M> scalar )
+    {
+        mat_value<M> m;
+        row<0>(m) = row<0>(matrix) / scalar;
+        row<1>(m) = row<1>(matrix) / scalar;
+        row<2>(m) = row<2>(matrix) / scalar;
+        return m;
+    }
+
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rx(theta)
     template<concepts::mat33_type T> SQUIGGLE_INLINE void set_rotx(T& matrix, typename mat_traits<T>::scalar_type angle)
@@ -178,6 +228,7 @@ namespace sqg
 
     //https://en.wikipedia.org/wiki/Rotation_matrix
     // Rotation matrix from axis and angle
+    // set matrix to angle/axis rotation, function normalises input axis, so vectors with length != 1 are accepted
     template<concepts::mat33_type M, concepts::read_vec3_type V> SQUIGGLE_INLINE void set_rot( M& matrix, const V& axis, mat_scalar<M> angle )
     {
         static_assert( std::same_as<mat_scalar<M>,vec_scalar<V>>, "Scalar type must match for this operation" );
@@ -187,9 +238,13 @@ namespace sqg
         const scalar one_cosa = scalar{1} - cosa;
         const scalar sina = std::sin(angle);
 
-        const auto x = X(axis);
-        const auto y = Y(axis);
-        const auto z = Z(axis);
+        sqg::vec3<scalar> v;
+        assign(v, axis);
+        normalize(v);
+
+        const auto x = v.x;
+        const auto y = v.y;
+        const auto z = v.z;
 
         // Diagonal
         A00(matrix,  x * x * one_cosa + cosa);
