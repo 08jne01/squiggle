@@ -16,7 +16,7 @@ namespace sqg
             return r;
         }
 
-        static_assert( concepts::read_vec4_type<extend4_view>, "Must Satisfy vread_vec4 constraints" );
+        static_assert( concepts::read_vec4_type<extend4_view>, "Type V must satisfy read_vec4 constraints" );
     };
 
     template<concepts::read_vec3_type V>
@@ -27,9 +27,9 @@ namespace sqg
         using view = extend4_view<V>;
         static constexpr int n_dims = 4;
 
-        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return X(v); }
-        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return Y(v); }
-        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return Z(v); }
+        static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return X(v.vector); }
+        static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return Y(v.vector); }
+        static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return Z(v.vector); }
         static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return scalar_type{1}; }
     };
 }
