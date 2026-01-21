@@ -250,6 +250,122 @@ void test_vec(std::mt19937& generator)
             REQUIRE(m == boost::qvm::zero_mat<T,3>());
         });
     }
+
+    SECTION("Euler")
+    {
+
+        SECTION("set_rotxzx")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_xzx(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotxzx(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotxyx")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_xyx(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotxyx(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotyxy")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_yxy(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotyxy(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotyzy")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_yzy(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotyzy(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotzyz")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_zyz(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotzyz(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotzxz")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_zxz(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotzxz(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+        
+    }
+
+    SECTION("Tait-Bryan")
+    {
+        SECTION("set_rotxzy")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_xzy(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotxzy(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotxyz")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_xyz(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotxyz(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotyxz")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_yxz(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotyxz(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotyzx")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_yzx(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotyzx(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotzyx")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_zyx(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotzyx(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+
+        SECTION("set_rotzxy")
+        {
+            test_quat_vec_operation2<T>(generator, [](mat<T> q, sqg::vec3<T> v, qmat<T> qq, boost::qvm::vec<T,3> qv){
+                boost::qvm::set_rot_zxy(qq, X(qv), Y(qv), Z(qv));
+                sqg::set_rotzxy(q, X(v), Y(v), Z(v)); 
+                REQUIRE(error(q,qq) == boost::qvm::zero_mat<T,3>());
+            });
+        }
+    }
 }
 
 

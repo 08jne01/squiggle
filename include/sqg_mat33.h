@@ -345,6 +345,227 @@ namespace sqg
         A21(matrix,  yz_one_cosa + xsina);
     }
 
+    // Euler
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotxzx( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, cb );               A01(matrix, -cy*sb );              A02(matrix, sb*sy );
+        A10(matrix, ca*sb );            A11(matrix, ca*cb*cy - sa*sy );    A12(matrix, -cy*sa - ca*cb*sy );
+        A20(matrix, sa*sb );            A21(matrix, ca*sy + cb*cy*sa );    A22(matrix, ca*cy - cb*sa*sy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotxyx( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, cb );               A01(matrix, sb*sy );               A02(matrix, cy*sb );
+        A10(matrix, sa*sb );            A11(matrix, ca*cy - cb*sa*sy );    A12(matrix, -ca*sy - cb*cy*sa );
+        A20(matrix, -ca*sb );           A21(matrix, cy*sa + ca*cb*sy );    A22(matrix, ca*cb*cy - sa*sy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotyxy( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cy - cb*sa*sy ); A01(matrix, sa*sb );               A02(matrix, ca*sy + cb*cy*sa );
+        A10(matrix, sb*sy );            A11(matrix, cb );                  A12(matrix, -cy*sb );
+        A20(matrix, -cy*sa - ca*cb*sy );A21(matrix, ca*sb );               A22(matrix, ca*cb*cy - sa*sy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotyzy( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cb*cy - sa*sy ); A01(matrix, -ca*sb );              A02(matrix, cy*sa + ca*cb*sy );
+        A10(matrix, cy*sb );            A11(matrix, cb );                  A12(matrix, sb*sy );
+        A20(matrix, -ca*sy - cb*cy*sa );A21(matrix, sa*sb );               A22(matrix, ca*cy - cb*sa*sy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotzyz( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cb*cy - sa*sy ); A01(matrix, -cy*sa - ca*cb*sy );   A02(matrix, ca*sb );
+        A10(matrix, ca*sy + cb*cy*sa ); A11(matrix, ca*cy - cb*sa*sy );    A12(matrix, sa*sb );
+        A20(matrix, -cy*sb );           A21(matrix, sb*sy );               A22(matrix, cb );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotzxz( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cy - cb*sa*sy ); A01(matrix, -ca*sy - cb*cy*sa );   A02(matrix, sa*sb );
+        A10(matrix, cy*sa + ca*cb*sy ); A11(matrix, ca*cb*cy - sa*sy );    A12(matrix, -ca*sb );
+        A20(matrix, sb*sy );            A21(matrix, cy*sb );               A22(matrix, cb );
+    }
+
+    // Tait-Bryan
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotxzy( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, cb*cy );            A01(matrix, -sb );                 A02(matrix, cb*sy );
+        A10(matrix, sa*sy + ca*cy*sb ); A11(matrix, ca*cb );               A12(matrix, ca*sb*sy - cy*sa );
+        A20(matrix, cy*sa*sb - ca*sy ); A21(matrix, cb*sa );               A22(matrix, ca*cy + sa*sb*sy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotxyz( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, cb*cy );            A01(matrix, -cb*sy );              A02(matrix, sb );
+        A10(matrix, ca*sy + cy*sa*sb ); A11(matrix, ca*cy - sa*sb*sy );    A12(matrix, -cb*sa );
+        A20(matrix, sa*sy - ca*cy*sb ); A21(matrix, cy*sa + ca*sb*sy );    A22(matrix, ca*cb );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotyxz( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cy + sa*sb*sy ); A01(matrix, cy*sa*sb - ca*sy );    A02(matrix, cb*sa );
+        A10(matrix, cb*sy );            A11(matrix, cb*cy );               A12(matrix, -sb );
+        A20(matrix, ca*sb*sy - cy*sa ); A21(matrix, ca*cy*sb + sa*sy );    A22(matrix, ca*cb );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotyzx( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cb );            A01(matrix, sa*sy - ca*cy*sb );    A02(matrix, cy*sa + ca*sb*sy );
+        A10(matrix, sb );               A11(matrix, cb*cy );               A12(matrix, -cb*sy );
+        A20(matrix, -cb*sa );           A21(matrix, ca*sy + cy*sa*sb );    A22(matrix, ca*cy - sa*sb*sy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotzyx( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cb );            A01(matrix, ca*sb*sy - cy*sa );    A02(matrix, sa*sy + ca*cy*sb );
+        A10(matrix, cb*sa );            A11(matrix, ca*cy + sa*sb*sy );    A12(matrix, cy*sa*sb - ca*sy );
+        A20(matrix, -sb );              A21(matrix, cb*sy );               A22(matrix, cb*cy );
+    }
+
+    //https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+    // angles about their axes a,b,y (alpha,beta,gamma)
+    template<concepts::mat33_type M>
+    SQUIGGLE_INLINE void set_rotzxy( M& matrix, mat_scalar<M> a, mat_scalar<M> b, mat_scalar<M> y )
+    {
+        using scalar = mat_scalar<M>;
+        const scalar ca = std::cos(a);
+        const scalar sa = std::sin(a);
+        const scalar cb = std::cos(b);
+        const scalar sb = std::sin(b);
+        const scalar cy = std::cos(y);
+        const scalar sy = std::sin(y);
+
+        A00(matrix, ca*cy - sa*sb*sy ); A01(matrix, -cb*sa );              A02(matrix, ca*sy + cy*sa*sb );
+        A10(matrix, cy*sa + ca*sb*sy ); A11(matrix, ca*cb );               A12(matrix, sa*sy - ca*cy*sb );
+        A20(matrix, -cb*sy );           A21(matrix, sb );                  A22(matrix, cb*cy );
+    }
+
+
     template<typename T> SQUIGGLE_INLINE mat33<T> rotx_mat( T angle )
     {
         mat33<T> m;
