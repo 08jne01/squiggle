@@ -128,8 +128,8 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<row,0>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<row,1>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<row,0>(v.matrix, s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<row,1>(v.matrix, s); }
     };
 
     template<int row, concepts::mat22_type M, concepts::read_vec2_type V>
@@ -204,29 +204,29 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<row,2>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return A<row,3>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<row,0>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<row,1>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<row,2>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& W(view& v) { return A<row,3>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<row,0>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<row,1>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Z(view& v, scalar_type s) { return A<row,2>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void W(view& v, scalar_type s) { return A<row,3>(v.matrix,s); }
     };
 
-    template<int row, concepts::mat44_type M, concepts::read_vec4_type V>
-    SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
-    {
-        X(view,   X(vector));
-        Y(view,   Y(vector));
-        Z(view,   Z(vector));
-        W(view,   W(vector));
-    }
+    // template<int row, concepts::mat44_type M, concepts::read_vec4_type V>
+    // SQUIGGLE_INLINE constexpr void assign( row_view<M,row> view, const V& vector )
+    // {
+    //     X(view,   X(vector));
+    //     Y(view,   Y(vector));
+    //     Z(view,   Z(vector));
+    //     W(view,   W(vector));
+    // }
 
     template<int row_index, concepts::mat_type M>
-    SQUIGGLE_INLINE constexpr row_view<M, row_index> row( M& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr row_view<M, row_index> row( M& matrix )
     {
         return {matrix};
     }
 
     template<int row_index, concepts::mat_type T>
-    SQUIGGLE_INLINE constexpr read_row_view<T,row_index> row( const T& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr read_row_view<T,row_index> row( const T& matrix )
     {
         return {matrix};
     }
@@ -254,8 +254,8 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<0,col>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<1,col>(v.matrix,s); }
     };
 
     template<int col, concepts::mat22_type M, concepts::read_vec2_type V>
@@ -290,9 +290,9 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<0,col>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<1,col>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Z(view& v, scalar_type s) { return A<2,col>(v.matrix,s); }
     };
 
     template<int col, concepts::mat33_type M, concepts::read_vec3_type V>
@@ -330,10 +330,10 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type W(const view& v) { return A<3,col>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& W(view& v) { return A<3,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<0,col>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<1,col>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void Z(view& v, scalar_type s) { return A<2,col>(v.matrix,s); }
+        static SQUIGGLE_INLINE constexpr void W(view& v, scalar_type s) { return A<3,col>(v.matrix,s); }
     };
 
     template<int col, concepts::mat44_type M, concepts::read_vec4_type V>
@@ -346,13 +346,13 @@ namespace sqg
     }
 
     template<int col_index, concepts::mat_type T>
-    SQUIGGLE_INLINE constexpr read_col_view<T,col_index> col( const T& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr read_col_view<T,col_index> col( const T& matrix )
     {
         return {matrix};
     }
 
     template<int col_index, concepts::mat_type M>
-    SQUIGGLE_INLINE constexpr col_view<M, col_index> col( M& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr col_view<M, col_index> col( M& matrix )
     {
         return {matrix};
     }
@@ -406,7 +406,7 @@ namespace sqg
     };
 
     template<concepts::mat_type M>
-    SQUIGGLE_INLINE constexpr transposed_view<M> transposed( const M& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr transposed_view<M> transposed( const M& matrix )
     {
         return {matrix};
     }
@@ -433,9 +433,9 @@ namespace sqg
         M44& matrix;
 
         template<concepts::read_mat33_type M33>
-        SQUIGGLE_INLINE constexpr orientation_view& operator=( const M33& matrix )
+        SQUIGGLE_INLINE constexpr orientation_view& operator=( const M33& matrix_in )
         {
-            assign(*this, matrix);
+            assign(*this, matrix_in);
             return *this;
         }
 
@@ -513,7 +513,7 @@ namespace sqg
         template<concepts::read_vec3_type V>
         SQUIGGLE_INLINE constexpr position_view& operator=( const V& vector )
         {
-            assign(*this, matrix);
+            assign(*this, vector);
             return *this;
         }
 
@@ -555,9 +555,9 @@ namespace sqg
         static SQUIGGLE_INLINE constexpr scalar_type Y(const view& v) { return A<1,col>(v.matrix); }
         static SQUIGGLE_INLINE constexpr scalar_type Z(const view& v) { return A<2,col>(v.matrix); }
 
-        static SQUIGGLE_INLINE constexpr scalar_type& X(view& v) { return A<0,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Y(view& v) { return A<1,col>(v.matrix); }
-        static SQUIGGLE_INLINE constexpr scalar_type& Z(view& v) { return A<2,col>(v.matrix); }
+        static SQUIGGLE_INLINE constexpr void X(view& v, scalar_type s) { return A<0,col>(v.matrix, s); }
+        static SQUIGGLE_INLINE constexpr void Y(view& v, scalar_type s) { return A<1,col>(v.matrix, s); }
+        static SQUIGGLE_INLINE constexpr void Z(view& v, scalar_type s) { return A<2,col>(v.matrix, s); }
     };
 
     template<concepts::mat44_type M>
@@ -567,19 +567,19 @@ namespace sqg
     }
 
     template<concepts::mat44_type M>
-    SQUIGGLE_INLINE constexpr orientation_view<M> orientation( M& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr orientation_view<M> orientation( M& matrix )
     {
         return {matrix};
     }
 
     template<concepts::mat44_type M>
-    SQUIGGLE_INLINE constexpr read_position_view<M> position( const M& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr read_position_view<M> position( const M& matrix )
     {
         return {matrix};
     }
 
     template<concepts::mat44_type M>
-    SQUIGGLE_INLINE constexpr position_view<M> position( M& matrix )
+    [[nodiscard]] SQUIGGLE_INLINE constexpr position_view<M> position( M& matrix )
     {
         return {matrix};
     }

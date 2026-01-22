@@ -112,26 +112,32 @@ namespace sqg
     using vec2d = vec2<double>;
     using vec2f = vec2<float>;
     using vec2i = vec2<int>;
+    using vec2u = vec2<unsigned int>;
 
     using vec3d = vec3<double>;
     using vec3f = vec3<float>;
     using vec3i = vec3<int>;
+    using vec3u = vec3<unsigned int>;
 
     using vec4d = vec4<double>;
     using vec4f = vec4<float>;
     using vec4i = vec4<int>;
+    using vec4u = vec4<unsigned int>;
 
     using mat22d = mat22<double>;
     using mat22f = mat22<float>;
     using mat22i = mat22<int>;
+    using mat22u = mat22<unsigned int>;
 
     using mat33d = mat33<double>;
     using mat33f = mat33<float>;
     using mat33i = mat33<int>;
+    using mat33u = mat33<unsigned int>;
 
     using mat44d = mat44<double>;
     using mat44f = mat44<float>;
     using mat44i = mat44<int>;
+    using mat44u = mat44<unsigned int>;
 
     using quatd = quat<double>;
     using quatf = quat<float>;
