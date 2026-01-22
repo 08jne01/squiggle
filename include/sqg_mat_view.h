@@ -548,7 +548,7 @@ namespace sqg
         static constexpr int col = 3;
         using scalar_type = mat_traits<M>::scalar_type;
         using type = vec3<scalar_type>;
-        using view = read_position_view<M>;
+        using view = position_view<M>;
         static constexpr int n_dims = 3;
 
         static SQUIGGLE_INLINE constexpr scalar_type X(const view& v) { return A<0,col>(v.matrix); }
